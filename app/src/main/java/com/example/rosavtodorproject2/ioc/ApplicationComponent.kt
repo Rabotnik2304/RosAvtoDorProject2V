@@ -1,4 +1,4 @@
-package ioc
+package com.example.rosavtodorproject2.ioc
 
 import com.example.rosavtodorproject2.data.dataSource.DataSourceHardCode
 import com.example.rosavtodorproject2.domain.useCases.UserWithLastMessageUseCase

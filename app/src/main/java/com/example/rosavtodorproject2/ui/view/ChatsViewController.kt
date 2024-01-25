@@ -1,4 +1,4 @@
-package com.example.RosAvtoDorApp.ui.view
+package com.example.rosavtodorproject2.ui.view
 
 import android.app.Activity
 import android.view.View
@@ -6,8 +6,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.RosAvtoDorApp.ui.stateHolder.ChatsFragmentViewModel
 import com.example.rosavtodorproject2.R
+import com.example.rosavtodorproject2.ui.stateHolder.ChatsFragmentViewModel
 
 class ChatsViewController(
     private val activity: Activity,

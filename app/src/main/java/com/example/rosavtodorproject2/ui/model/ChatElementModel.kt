@@ -1,4 +1,4 @@
-package com.example.RosAvtoDorApp.ui.model
+package com.example.rosavtodorproject2.ui.model
 
 import java.util.Date
 

@@ -1,4 +1,4 @@
-package com.example.RosAvtoDorApp.ui.view
+package com.example.rosavtodorproject2.ui.view
 
 import android.graphics.Rect
 import android.view.View

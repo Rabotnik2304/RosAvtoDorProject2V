@@ -1,7 +1,7 @@
-package com.example.RosAvtoDorApp.ui.view
+package com.example.rosavtodorproject2.ui.view
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.RosAvtoDorApp.ui.model.ChatElementModel
+import com.example.rosavtodorproject2.ui.model.ChatElementModel
 
 class ChatsDiffCalculator : DiffUtil.ItemCallback<ChatElementModel>() {
     override fun areItemsTheSame(oldItem: ChatElementModel, newItem: ChatElementModel): Boolean {

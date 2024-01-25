@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.rosavtodorproject2.data.dataSource.DataSourceHardCode
 import com.example.rosavtodorproject2.data.models.Message
-import ioc.AppComponentScope
+import com.example.rosavtodorproject2.ioc.AppComponentScope
 import javax.inject.Inject
 @AppComponentScope
 class MessagesRepository @Inject constructor(

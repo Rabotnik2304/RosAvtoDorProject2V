@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#343A56"
-    tools:context="com.example.RosAvtoDorApp.ui.view.ChatsFragment">
+    tools:context=".ui.view.ChatsFragment">
 
     <ImageView
         android:id= "@+id/profile_and_search_panel"

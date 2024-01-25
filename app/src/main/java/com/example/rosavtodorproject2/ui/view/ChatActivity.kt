@@ -1,4 +1,4 @@
-package com.example.RosAvtoDorApp.ui.view
+package com.example.rosavtodorproject2.ui.view
 
 import android.content.Context
 import android.content.Intent
@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import com.example.rosavtodorproject2.R
-import com.example.rosavtodorproject2.ui.view.MainActivity
 
 class ChatActivity : AppCompatActivity() {
     companion object {

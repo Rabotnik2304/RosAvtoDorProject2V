@@ -1,4 +1,4 @@
-package com.example.RosAvtoDorApp.ui.view
+package com.example.rosavtodorproject2.ui.view
 
 import android.content.Context
 import android.util.TypedValue
@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
-import com.example.RosAvtoDorApp.ui.model.ChatElementModel
 import com.example.rosavtodorproject2.R
+import com.example.rosavtodorproject2.ui.model.ChatElementModel
 import java.util.Date
 
 class ChatElementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

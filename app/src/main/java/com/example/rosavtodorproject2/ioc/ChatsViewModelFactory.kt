@@ -1,9 +1,9 @@
-package ioc
+package com.example.rosavtodorproject2.ioc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.RosAvtoDorApp.ui.stateHolder.ChatsFragmentViewModel
 import com.example.rosavtodorproject2.domain.useCases.UserWithLastMessageUseCase
+import com.example.rosavtodorproject2.ui.stateHolder.ChatsFragmentViewModel
 import javax.inject.Inject
 
 class ChatsViewModelFactory @Inject constructor(

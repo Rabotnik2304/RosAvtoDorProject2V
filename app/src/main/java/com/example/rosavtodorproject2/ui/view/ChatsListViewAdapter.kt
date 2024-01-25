@@ -1,11 +1,11 @@
-package com.example.RosAvtoDorApp.ui.view
+package com.example.rosavtodorproject2.ui.view
 
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.RosAvtoDorApp.ui.model.ChatElementModel
 import com.example.rosavtodorproject2.R
+import com.example.rosavtodorproject2.ui.model.ChatElementModel
 
 class ChatsListViewAdapter(
     chatsDiffCalculator: ChatsDiffCalculator

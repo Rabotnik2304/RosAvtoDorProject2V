@@ -4,4 +4,4 @@
     android:id = "@+id/main_activity_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:name="com.example.RosAvtoDorApp.ui.view.ChatsFragment"/>
+    android:name="com.example.rosavtodorproject2.ui.view.ChatsFragment"/>

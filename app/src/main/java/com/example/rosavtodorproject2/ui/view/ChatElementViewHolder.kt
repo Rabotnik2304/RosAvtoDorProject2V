@@ -24,10 +24,17 @@ class ChatElementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         userPicture.setImageBitmap(AppCompatResources.getDrawable(itemView.context,chatElementModel.userPictureResourcesId)!!
             .toBitmap(itemView.context.toPx(70).toInt(), itemView.context.toPx(70).toInt()))
-        userLastMessage.text = chatElementModel.userLastMessage
+        userLastMessage.text = smallPartOfMessage(chatElementModel.userLastMessage)
         userLastMessageDate.text = chatElementModel.userLastMessageDate.myToString()
     }
-    fun Date.myToString() : String = "${this.day}.${this.month}.${this.year}"
+    fun smallPartOfMessage(message: String):String{
+        if(message.length<28){
+            return message
+        }else{
+            return message.substring(0,27)+"..."
+        }
+    }
+    fun Date.myToString() : String = "${this.date}.${this.month + 1}.${this.year}"
     fun Context.toPx(dp: Int): Float = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
         dp.toFloat(),

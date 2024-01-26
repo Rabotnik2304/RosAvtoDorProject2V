@@ -1,11 +1,12 @@
 package com.example.rosavtodorproject2.ui.view.ChatsWindow
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ListAdapter
 import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.ui.model.ChatElementModel
-import com.example.rosavtodorproject2.ui.view.MAIN
 
 class ChatsListViewAdapter(
     chatsDiffCalculator: ChatsDiffCalculator
@@ -27,7 +28,14 @@ class ChatsListViewAdapter(
     override fun onBindViewHolder(holder: ChatElementViewHolder, position: Int) {
         val chatElement = holder.itemView
         chatElement.setOnClickListener {
-            MAIN.navController.navigate(R.id.action_chatsFragment_to_conversationFragment)
+
+            val action = ChatsFragmentDirections.actionChatsFragmentToConversationFragment(
+                collocutorId = currentList[position].id,
+                collocutorName = currentList[position].userName,
+                collocutorPictureResourceId =currentList[position].userPictureResourcesId,
+            )
+
+            Navigation.findNavController(holder.itemView).navigate(action)
 
             /*val intentToOpenChatActivity = Intent(chatElement.context, ChatActivity::class.java)
 

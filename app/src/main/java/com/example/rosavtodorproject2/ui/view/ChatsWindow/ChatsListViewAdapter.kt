@@ -1,6 +1,5 @@
 package com.example.rosavtodorproject2.ui.view.ChatsWindow
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
@@ -36,17 +35,6 @@ class ChatsListViewAdapter(
             )
 
             Navigation.findNavController(holder.itemView).navigate(action)
-
-            /*val intentToOpenChatActivity = Intent(chatElement.context, ChatActivity::class.java)
-
-            intentToOpenChatActivity.putExtra(ChatActivity.user_id_key, currentList[position].id)
-            intentToOpenChatActivity.putExtra(ChatActivity.user_name_key, currentList[position].userName)
-            intentToOpenChatActivity.putExtra(
-                ChatActivity.user_picture_key,
-                currentList[position].userPictureResourcesId
-            )
-
-            chatElement.context.startActivity(intentToOpenChatActivity)*/
         }
         holder.onBind(currentList[position])
     }

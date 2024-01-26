@@ -4,7 +4,8 @@ import java.util.Date
 
 data class Message(
     val id: Int,
-    val userId: Int,
+    val userSenderId: Int,
+    val userRecieverId: Int,
     val text: String,
     val date: Date,
     )

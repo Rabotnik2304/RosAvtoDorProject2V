@@ -24,6 +24,7 @@ class ChatsFragmentViewModel @Inject constructor(
     }
     private fun UserWithLastMessage.transformToItemModel() = ChatElementModel(
         id =user.id,
+        userSenderName=senderName,
         userPictureResourcesId = user.userPictureResourcesId,
         userName = user.name,
         userLastMessage = lastMessage.text,

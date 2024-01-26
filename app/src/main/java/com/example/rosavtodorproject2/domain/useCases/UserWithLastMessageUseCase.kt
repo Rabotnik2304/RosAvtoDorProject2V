@@ -2,6 +2,7 @@ package com.example.rosavtodorproject2.domain.useCases
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import com.example.rosavtodorproject2.data.dataSource.DataSourceHardCode.Companion.currentUserId
 import com.example.rosavtodorproject2.data.models.Message
 import com.example.rosavtodorproject2.data.repositories.MessagesRepository
 import com.example.rosavtodorproject2.data.repositories.UserRepository
@@ -30,14 +31,16 @@ class  UserWithLastMessageUseCase @Inject constructor(
         messageRepository.updateMessages()
         userRepository.updateUsers()
     }
+
     private fun updateUserWithLastMessage(){
-        val userIdAndMessage: Map<Int,List<Message>> = messageRepository.messages.value.orEmpty().groupBy { it.userId }
+        val userIdAndMessage: Map<Int,List<Message>> = messageRepository.messages.value.orEmpty().groupBy { it.userSenderId }
         val userIdAndLastMessage : Map<Int,Message> = userIdAndMessage.mapValues { it.value.maxBy { message -> message.date}}
 
         val result:List<UserWithLastMessage> = userIdAndLastMessage.map{
             UserWithLastMessage(
                 userRepository.users.value.orEmpty()[it.key],
-                it.value
+                it.value,
+                if(it.value.userSenderId==currentUserId) "Вы:" else userRepository.users.value.orEmpty()[it.value.userSenderId].name+":"
             )
         }
 

@@ -23,7 +23,7 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-        val userId = intent.getIntExtra(user_id_key, 0)
+        /*val userId = intent.getIntExtra(user_id_key, 0)
 
         val userName = intent.getStringExtra(user_name_key)
         val userPictureResourceId: Int = intent.getIntExtra(user_picture_key,0)
@@ -41,7 +41,7 @@ class ChatActivity : AppCompatActivity() {
         backToChatsButton.setOnClickListener {
             val intentToOpenMainActivity = Intent(this, MainActivity::class.java)
             startActivity(intentToOpenMainActivity)
-        }
+        }*/
     }
     fun Context.toPx(dp: Int): Float = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,

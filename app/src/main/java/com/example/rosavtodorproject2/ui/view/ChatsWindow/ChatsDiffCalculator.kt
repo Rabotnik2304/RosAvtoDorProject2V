@@ -1,4 +1,4 @@
-package com.example.rosavtodorproject2.ui.view
+package com.example.rosavtodorproject2.ui.view.ChatsWindow
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.rosavtodorproject2.ui.model.ChatElementModel

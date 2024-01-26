@@ -1,4 +1,4 @@
-package com.example.rosavtodorproject2.ui.view
+package com.example.rosavtodorproject2.ui.view.ChatsWindow
 
 import android.app.Activity
 import android.view.View

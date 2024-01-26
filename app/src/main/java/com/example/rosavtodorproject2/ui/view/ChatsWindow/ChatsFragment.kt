@@ -1,4 +1,4 @@
-package com.example.rosavtodorproject2.ui.view
+package com.example.rosavtodorproject2.ui.view.ChatsWindow
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,8 +16,8 @@ class ChatsFragment: Fragment(){
         get() = App.getInstance().applicationComponent
 
 
-    private lateinit var adapter:ChatsListViewAdapter
-    private var chatsViewController:ChatsViewController? = null
+    private lateinit var adapter: ChatsListViewAdapter
+    private var chatsViewController: ChatsViewController? = null
 
     private lateinit var viewModel: ChatsFragmentViewModel
 

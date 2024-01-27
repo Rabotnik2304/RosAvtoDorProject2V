@@ -28,6 +28,6 @@ class ChatsFragmentViewModel @Inject constructor(
         userPictureResourcesId = user.userPictureResourcesId,
         userName = user.name,
         userLastMessage = lastMessage.text,
-        userLastMessageDate = lastMessage.date
+        userLastMessageDate = lastMessage.sendDate
     )
 }

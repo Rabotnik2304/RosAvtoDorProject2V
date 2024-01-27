@@ -21,7 +21,7 @@ class DataSourceHardCode {
             R.drawable.empty_person_avatar
         )
     )
-    private val messages:List<Message> = listOf(
+    private val messages:MutableList<Message> = mutableListOf(
         Message(
             0,
             0,

@@ -7,5 +7,5 @@ data class Message(
     val userSenderId: Int,
     val userRecieverId: Int,
     val text: String,
-    val date: Date,
+    val sendDate: Date,
     )

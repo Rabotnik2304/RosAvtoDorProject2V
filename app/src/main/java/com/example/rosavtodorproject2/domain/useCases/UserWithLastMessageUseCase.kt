@@ -34,7 +34,7 @@ class  UserWithLastMessageUseCase @Inject constructor(
 
     private fun updateUserWithLastMessage(){
         val userIdAndMessage: Map<Int,List<Message>> = messageRepository.messages.value.orEmpty().groupBy { it.userSenderId }
-        val userIdAndLastMessage : Map<Int,Message> = userIdAndMessage.mapValues { it.value.maxBy { message -> message.date}}
+        val userIdAndLastMessage : Map<Int,Message> = userIdAndMessage.mapValues { it.value.maxBy { message -> message.sendDate}}
 
         val result:List<UserWithLastMessage> = userIdAndLastMessage.map{
             UserWithLastMessage(

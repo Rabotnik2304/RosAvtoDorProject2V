@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class ChatsFragmentViewModel @Inject constructor(
     val userWithLastMessageUseCase: UserWithLastMessageUseCase,
-    ):ViewModel() {
+):ViewModel() {
     val chats = userWithLastMessageUseCase.userWithLastMessage.map{
         it.map { userWithLastMessage -> userWithLastMessage.transformToItemModel()  }
     }

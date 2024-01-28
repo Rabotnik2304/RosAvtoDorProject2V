@@ -11,12 +11,26 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.rosavtodorproject2.App
 import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.databinding.FragmentConversationBinding
+import com.example.rosavtodorproject2.ui.stateHolder.ChatsFragmentViewModel
+import com.example.rosavtodorproject2.ui.view.ChatsWindow.ChatsListViewAdapter
+import com.example.rosavtodorproject2.ui.view.ChatsWindow.ChatsViewController
 
 class ConversationFragment : Fragment() {
     var collocutorId = 0
     lateinit var binding: FragmentConversationBinding
+
+    private val applicationComponent
+        get() = App.getInstance().applicationComponent
+
+
+    private lateinit var adapter: ChatsListViewAdapter
+    private var chatsViewController: ChatsViewController? = null
+
+    private lateinit var viewModel: ChatsFragmentViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

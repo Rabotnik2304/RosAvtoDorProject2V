@@ -34,7 +34,7 @@ class  MessageWithUserSenderUseCase @Inject constructor(
     }
 
     private fun updateMessageWithUserSender(){
-        val sortedByTimeMessages: List<Message> = messageRepository.messages.value.orEmpty().sortedByDescending { it.sendDate }
+        val sortedByTimeMessages: List<Message> = messageRepository.messages.value.orEmpty().sortedBy { it.sendDate }
 
         val result:List<MessageWithUserSender> = sortedByTimeMessages.map{
             MessageWithUserSender(

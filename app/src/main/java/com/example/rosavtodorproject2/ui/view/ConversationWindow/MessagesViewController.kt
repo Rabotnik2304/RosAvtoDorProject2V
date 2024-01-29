@@ -30,6 +30,7 @@ class MessagesViewController(
     fun setUpMessagesList(){
         val layoutManager = LinearLayoutManager(activity.baseContext,
             LinearLayoutManager.VERTICAL,false)
+        layoutManager.stackFromEnd=true
         messagesRecyclerView.adapter=adapter
         messagesRecyclerView.layoutManager = layoutManager
 

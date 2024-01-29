@@ -9,12 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rosavtodorproject2.App
 import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.databinding.FragmentConversationBinding
 import com.example.rosavtodorproject2.ui.stateHolder.ChatsFragmentViewModel
+import com.example.rosavtodorproject2.ui.stateHolder.ConversationFragmentViewModel
 import com.example.rosavtodorproject2.ui.view.ChatsWindow.ChatsListViewAdapter
 import com.example.rosavtodorproject2.ui.view.ChatsWindow.ChatsViewController
 
@@ -26,14 +28,17 @@ class ConversationFragment : Fragment() {
         get() = App.getInstance().applicationComponent
 
 
-    private lateinit var adapter: ChatsListViewAdapter
-    private var chatsViewController: ChatsViewController? = null
+    private lateinit var adapter: MessagesListViewAdapter
+    private var messagesViewController: MessagesViewController? = null
 
-    private lateinit var viewModel: ChatsFragmentViewModel
+    private lateinit var viewModel: ConversationFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        adapter = MessagesListViewAdapter(MessagesDiffCalculator())
+        viewModel = ViewModelProvider(this, applicationComponent.getConversationViewModelFactory())
+            .get(ConversationFragmentViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -41,14 +46,25 @@ class ConversationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentConversationBinding.inflate(layoutInflater,container,false)
+
+        val args : ConversationFragmentArgs by navArgs()
+        collocutorId = args.collocutorId
+
+        messagesViewController = MessagesViewController(
+            activity= requireActivity(),
+            rootView = binding.root,
+            adapter= adapter,
+            lifecycleOwner = viewLifecycleOwner,
+            viewModel= viewModel,
+            collocutorId=collocutorId,
+        ).apply { setUpViews() }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args : ConversationFragmentArgs by navArgs()
-
-        collocutorId = args.collocutorId
 
         binding.collocutorName.text = args.collocutorName
 
@@ -69,4 +85,9 @@ class ConversationFragment : Fragment() {
         dp.toFloat(),
         resources.displayMetrics
     )
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        messagesViewController=null
+    }
 }

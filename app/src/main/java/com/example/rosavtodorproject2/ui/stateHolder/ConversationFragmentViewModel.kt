@@ -1,5 +1,6 @@
 package com.example.rosavtodorproject2.ui.stateHolder
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.example.rosavtodorproject2.data.repositories.MessagesRepository
@@ -14,7 +15,7 @@ import javax.inject.Inject
 class ConversationFragmentViewModel @Inject constructor(
     val messageWithUserSenderUseCase: MessageWithUserSenderUseCase,
 ): ViewModel() {
-    val messages = messageWithUserSenderUseCase.messageWithUserSender.map {
+    val messages: LiveData<List<MessageElementModel>> = messageWithUserSenderUseCase.messageWithUserSender.map {
         it.map { messageWithUserSender -> messageWithUserSender.transformToItemModel()}
     }
 

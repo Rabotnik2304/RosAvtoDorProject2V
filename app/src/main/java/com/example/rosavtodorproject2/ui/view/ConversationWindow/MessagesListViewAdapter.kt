@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.rosavtodorproject2.databinding.MessageElementBinding
 import com.example.rosavtodorproject2.ui.model.MessageElementModel
 
-class MessagesViewAdapter (
+class MessagesListViewAdapter (
     messagesDiffCalculator: MessagesDiffCalculator
 ): ListAdapter<MessageElementModel, MessageElementViewHolder>(messagesDiffCalculator) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageElementViewHolder {

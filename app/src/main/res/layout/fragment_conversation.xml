@@ -107,12 +107,12 @@
     </ImageButton>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chats"
+        android:id="@+id/messages_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/message_panel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/message_panel">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/collocutor_profile_panel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

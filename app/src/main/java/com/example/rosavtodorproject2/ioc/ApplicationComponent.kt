@@ -36,7 +36,7 @@ object ChatsViewModelModule{
 object ConversationViewModelModule{
     @Provides
     @AppComponentScope
-    fun getConversationViewModelFactory(messageWithUserSenderUseCase: MessageWithUserSenderUseCase): ConversationViewModelFactory{
-        return ConversationViewModelFactory(messageWithUserSenderUseCase)
+    fun getConversationViewModelFactory(messagesRepository:MessagesRepository,messageWithUserSenderUseCase: MessageWithUserSenderUseCase): ConversationViewModelFactory{
+        return ConversationViewModelFactory(messagesRepository,messageWithUserSenderUseCase)
     }
 }

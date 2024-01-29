@@ -15,10 +15,12 @@ import androidx.navigation.fragment.navArgs
 import com.example.rosavtodorproject2.App
 import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.databinding.FragmentConversationBinding
+import com.example.rosavtodorproject2.ui.model.MessageElementModel
 import com.example.rosavtodorproject2.ui.stateHolder.ChatsFragmentViewModel
 import com.example.rosavtodorproject2.ui.stateHolder.ConversationFragmentViewModel
 import com.example.rosavtodorproject2.ui.view.ChatsWindow.ChatsListViewAdapter
 import com.example.rosavtodorproject2.ui.view.ChatsWindow.ChatsViewController
+import java.util.Date
 
 class ConversationFragment : Fragment() {
     var collocutorId = 0
@@ -78,6 +80,19 @@ class ConversationFragment : Fragment() {
 
         binding.backToChatsPanelButton.setOnClickListener{
             findNavController().navigate(R.id.action_conversationFragment_to_chatsFragment)
+        }
+
+        binding.sendMessageButton.setOnClickListener {
+            viewModel.sendMessage(
+                MessageElementModel(
+                    -1,
+                    2,
+                    "User",
+                    collocutorId,
+                    binding.messageEditText.text.toString(),
+                    Date(2026,1,1)
+                )
+            )
         }
     }
     fun Context.toPx(dp: Int): Float = TypedValue.applyDimension(

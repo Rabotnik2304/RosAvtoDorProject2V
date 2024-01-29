@@ -13,6 +13,7 @@ import java.util.Date
 import javax.inject.Inject
 
 class ConversationFragmentViewModel @Inject constructor(
+    val messagesRepository: MessagesRepository,
     val messageWithUserSenderUseCase: MessageWithUserSenderUseCase,
 ): ViewModel() {
     val messages: LiveData<List<MessageElementModel>> = messageWithUserSenderUseCase.messageWithUserSender.map {
@@ -25,6 +26,16 @@ class ConversationFragmentViewModel @Inject constructor(
 
     fun updateUsersAndLastMessages(){
         messageWithUserSenderUseCase.updateUsersAndMessages()
+    }
+
+    fun sendMessage(message:MessageElementModel){
+        messagesRepository.addMessage(
+            id=message.id,
+            userSenderId = message.userSenderId,
+            userRecieverId = message.userRecieverId,
+            text = message.text,
+            sendDate = message.sendDate
+        )
     }
     private fun MessageWithUserSender.transformToItemModel() = MessageElementModel(
         id = message.id,

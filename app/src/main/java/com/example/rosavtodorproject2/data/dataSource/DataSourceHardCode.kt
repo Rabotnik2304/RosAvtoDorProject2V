@@ -7,7 +7,7 @@ import java.util.Date
 
 class DataSourceHardCode {
     companion object{
-        val currentUserId = -1
+        val currentUserId = 2
     }
     private val users:List<User> = listOf(
         User(
@@ -18,6 +18,11 @@ class DataSourceHardCode {
         User(
             1,
             "Оператор",
+            R.drawable.empty_person_avatar
+        ),
+        User(
+            2,
+            "Пользователь",
             R.drawable.empty_person_avatar
         )
     )

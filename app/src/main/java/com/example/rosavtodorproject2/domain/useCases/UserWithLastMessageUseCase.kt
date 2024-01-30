@@ -38,7 +38,7 @@ class  UserWithLastMessageUseCase @Inject constructor(
 
         val result:List<UserWithLastMessage> = conversationIdAndLastMessage.map{
             UserWithLastMessage(
-               userRepository.userContacts.value.orEmpty()[it.key],
+                userRepository.userContacts.value.orEmpty()[it.key],
                 it.value,
                 if(it.value.userSenderId==currentUser.id) "Вы:" else userRepository.userContacts.value.orEmpty()[it.value.userSenderId].name+":"
             )

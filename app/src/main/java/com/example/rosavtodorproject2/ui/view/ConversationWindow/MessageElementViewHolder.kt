@@ -1,5 +1,7 @@
 package com.example.rosavtodorproject2.ui.view.ConversationWindow
 
+import android.view.Gravity
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rosavtodorproject2.databinding.MessageElementBinding
 import com.example.rosavtodorproject2.ui.model.MessageElementModel
@@ -9,6 +11,7 @@ class MessageElementViewHolder(private val itemMessageBinding: MessageElementBin
     RecyclerView.ViewHolder(itemMessageBinding.root) {
 
     fun onBind(message: MessageElementModel){
+
         itemMessageBinding.messageCollocutorName.text = message.userSenderName
         itemMessageBinding.messageText.text = message.text
         itemMessageBinding.messageSendDate.text = message.sendDate.myToString()

@@ -86,12 +86,12 @@ class ConversationFragment : Fragment() {
         binding.sendMessageButton.setOnClickListener {
             viewModel.sendMessage(
                 MessageElementModel(
-                    -1,
-                    currentUser.id,
-                    currentUser.name,
-                    collocutorId,
-                    binding.messageEditText.text.toString(),
-                    Date(2026,1,1)
+                    id=-1,
+                    userSenderId = currentUser.id,
+                    userSenderName = currentUser.name,
+                    userRecieverId =  collocutorId,
+                    text= binding.messageEditText.text.toString(),
+                    sendDate=Date(2026,1,1)
                 )
             )
         }

@@ -40,7 +40,13 @@ class MessagesViewController(
         }
 
         //messagesRecyclerView.addItemDecoration(DividerItemDecoration(activity.baseContext,layoutManager.orientation))
-        messagesRecyclerView.addItemDecoration(MessageElementOffsetItemDecoration(leftOffset =  activity.baseContext.toPx(16).toInt(), bottomOffset = activity.baseContext.toPx(15).toInt()))
+        messagesRecyclerView.addItemDecoration(
+            MessageElementOffsetItemDecoration(
+                leftOffset =  activity.baseContext.toPx(16).toInt(),
+                bottomOffset = activity.baseContext.toPx(15).toInt(),
+                rightOffset =  activity.baseContext.toPx(16).toInt(),
+            )
+        )
     }
     fun Context.toPx(dp: Int): Float = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,

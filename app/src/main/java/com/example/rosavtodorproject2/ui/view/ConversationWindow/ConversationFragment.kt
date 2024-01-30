@@ -21,6 +21,7 @@ import com.example.rosavtodorproject2.ui.stateHolder.ChatsFragmentViewModel
 import com.example.rosavtodorproject2.ui.stateHolder.ConversationFragmentViewModel
 import com.example.rosavtodorproject2.ui.view.ChatsWindow.ChatsListViewAdapter
 import com.example.rosavtodorproject2.ui.view.ChatsWindow.ChatsViewController
+import java.util.Calendar
 import java.util.Date
 
 class ConversationFragment : Fragment() {
@@ -91,7 +92,7 @@ class ConversationFragment : Fragment() {
                     userSenderName = currentUser.name,
                     userRecieverId =  collocutorId,
                     text= binding.messageEditText.text.toString(),
-                    sendDate=Date(2026,1,1)
+                    sendDate= Calendar.getInstance().time.apply { year+=1900 }
                 )
             )
         }

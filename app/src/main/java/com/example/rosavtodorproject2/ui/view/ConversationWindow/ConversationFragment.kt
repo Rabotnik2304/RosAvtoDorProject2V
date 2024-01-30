@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rosavtodorproject2.App
 import com.example.rosavtodorproject2.R
+import com.example.rosavtodorproject2.data.dataSource.DataSourceHardCode.Companion.currentUser
 import com.example.rosavtodorproject2.databinding.FragmentConversationBinding
 import com.example.rosavtodorproject2.ui.model.MessageElementModel
 import com.example.rosavtodorproject2.ui.stateHolder.ChatsFragmentViewModel
@@ -86,8 +87,8 @@ class ConversationFragment : Fragment() {
             viewModel.sendMessage(
                 MessageElementModel(
                     -1,
-                    2,
-                    "User",
+                    currentUser.id,
+                    currentUser.name,
                     collocutorId,
                     binding.messageEditText.text.toString(),
                     Date(2026,1,1)

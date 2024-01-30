@@ -7,7 +7,6 @@ import com.example.rosavtodorproject2.data.models.Message
 import com.example.rosavtodorproject2.data.repositories.MessagesRepository
 import com.example.rosavtodorproject2.data.repositories.UserRepository
 import com.example.rosavtodorproject2.domain.model.MessageWithUserSender
-import com.example.rosavtodorproject2.domain.model.UserWithLastMessage
 import javax.inject.Inject
 
 class  MessageWithUserSenderUseCase @Inject constructor(
@@ -20,7 +19,7 @@ class  MessageWithUserSenderUseCase @Inject constructor(
     val messageWithUserSender: LiveData<List<MessageWithUserSender>> = _messageWithUserSender
 
     init {
-        _messageWithUserSender.addSource(userRepository.users){
+        _messageWithUserSender.addSource(userRepository.userContacts){
             updateMessageWithUserSender()
         }
         _messageWithUserSender.addSource(messageRepository.messages){
@@ -39,7 +38,7 @@ class  MessageWithUserSenderUseCase @Inject constructor(
         val result:List<MessageWithUserSender> = sortedByTimeMessages.map{
             MessageWithUserSender(
                 it,
-                userRepository.users.value.orEmpty()[it.userSenderId],
+                if (it.userSenderId!= DataSourceHardCode.currentUser.id) userRepository.userContacts.value.orEmpty()[it.userSenderId] else DataSourceHardCode.currentUser,
             )
         }
 

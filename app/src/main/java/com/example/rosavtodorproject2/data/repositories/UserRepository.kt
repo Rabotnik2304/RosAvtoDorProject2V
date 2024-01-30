@@ -10,10 +10,10 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(
     val dataSource: DataSourceHardCode
         ){
-    private val _users = MutableLiveData<List<User>>(emptyList())
-    val users: LiveData<List<User>> = _users
+    private val _userContacts = MutableLiveData<List<User>>(emptyList())
+    val userContacts: LiveData<List<User>> = _userContacts
     fun updateUsers(){
-        val loadedList = dataSource.loadUsers()
-        _users.value = loadedList
+        val loadedList = dataSource.loadUserContacts()
+        _userContacts.value = loadedList
     }
 }

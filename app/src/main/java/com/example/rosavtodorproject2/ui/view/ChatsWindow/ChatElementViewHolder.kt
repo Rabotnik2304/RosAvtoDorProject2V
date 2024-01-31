@@ -34,7 +34,7 @@ class ChatElementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
         )
         userLastMessage.text =
             smallPartOfMessage(chatElementModel.userSenderName, chatElementModel.userLastMessage)
-        val sdf = SimpleDateFormat("dd.MM.yyyy hh:mm", Locale.GERMANY)
+        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY)
         userLastMessageDate.text = sdf.format(chatElementModel.userLastMessageDate)
     }
 

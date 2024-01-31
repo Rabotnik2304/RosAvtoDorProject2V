@@ -17,7 +17,7 @@ class MessageElementViewHolder(private val itemMessageBinding: MessageElementBin
 
         itemMessageBinding.messageCollocutorName.text = message.userSenderName
         itemMessageBinding.messageText.text = message.text
-        val sdf =SimpleDateFormat("dd.MM.yyyy hh:mm", Locale.GERMANY)
+        val sdf =SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY)
         itemMessageBinding.messageSendDate.text = sdf.format(message.sendDate)
 
         if (message.userSenderId == currentUser.id) {

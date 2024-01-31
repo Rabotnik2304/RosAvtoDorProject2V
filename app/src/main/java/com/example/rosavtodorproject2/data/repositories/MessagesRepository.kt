@@ -19,10 +19,10 @@ class MessagesRepository @Inject constructor(
         _messages.value = dataSource.loadMessages()
     }
 
-    fun addMessage(id: Int, userSenderId: Int, userRecieverId: Int, text: String, sendDate: Date) {
+    fun addMessage(userSenderId: Int, userRecieverId: Int, text: String, sendDate: Date) {
         dataSource.loadMessages().add(
             Message(
-                id = id,
+                id = dataSource.loadMessages().size,
                 userSenderId = userSenderId,
                 userRecieverId = userRecieverId,
                 text = text,

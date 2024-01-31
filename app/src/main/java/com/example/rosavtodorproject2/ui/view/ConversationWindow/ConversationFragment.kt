@@ -84,12 +84,12 @@ class ConversationFragment : Fragment() {
         binding.sendMessageButton.setOnClickListener {
             viewModel.sendMessage(
                 MessageElementModel(
-                    id = -1,
+                    id = 0, // значение затычка, оно всё равно не используется
                     userSenderId = currentUser.id,
                     userSenderName = currentUser.name,
                     userRecieverId = collocutorId,
                     text = binding.messageEditText.text.toString(),
-                    sendDate = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+2")).time.apply { year += 1900 }
+                    sendDate = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+2")).time
                 )
             )
         }

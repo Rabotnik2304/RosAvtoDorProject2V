@@ -10,7 +10,9 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.ui.model.ChatElementModel
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class ChatElementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     //надо будет в будущем на viewBinding-и поменять
@@ -32,7 +34,8 @@ class ChatElementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
         )
         userLastMessage.text =
             smallPartOfMessage(chatElementModel.userSenderName, chatElementModel.userLastMessage)
-        userLastMessageDate.text = chatElementModel.userLastMessageDate.myToString()
+        val sdf = SimpleDateFormat("dd.MM.yyyy hh:mm", Locale.GERMANY)
+        userLastMessageDate.text = sdf.format(chatElementModel.userLastMessageDate)
     }
 
     fun smallPartOfMessage(senderName: String, message: String): String {
@@ -43,9 +46,6 @@ class ChatElementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
             return fullMessageText.substring(0, 26) + "..."
         }
     }
-
-    fun Date.myToString(): String =
-        "${this.date}.${this.month + 1}.${this.year}  ${this.hours}:${this.minutes}"
 
     fun Context.toPx(dp: Int): Float = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,

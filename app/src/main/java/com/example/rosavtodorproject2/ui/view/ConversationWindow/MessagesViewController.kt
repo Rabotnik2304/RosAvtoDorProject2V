@@ -38,7 +38,12 @@ class MessagesViewController(
 
 
         viewModel.messages.observe(lifecycleOwner) { newMessages ->
-            adapter.submitList(newMessages.filter { it.userRecieverId == collocutorId || it.userSenderId == collocutorId })
+            val messagesInThisConversation = newMessages.filter { it.userRecieverId == collocutorId || it.userSenderId == collocutorId }
+            adapter.submitList(messagesInThisConversation)
+            if (messagesInThisConversation.isNotEmpty())
+            {
+                messagesRecyclerView.smoothScrollToPosition(messagesInThisConversation.count() - 1)
+            }
         }
 
         messagesRecyclerView.addItemDecoration(
@@ -49,6 +54,7 @@ class MessagesViewController(
             )
         )
     }
+
 
     fun Context.toPx(dp: Int): Float = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,

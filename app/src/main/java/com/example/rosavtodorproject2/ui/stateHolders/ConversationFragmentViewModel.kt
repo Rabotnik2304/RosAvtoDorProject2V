@@ -28,7 +28,6 @@ class ConversationFragmentViewModel @Inject constructor(
 
     fun sendMessage(message: MessageElementModel) {
         messagesRepository.addMessage(
-            id = message.id,
             userSenderId = message.userSenderId,
             userRecieverId = message.userRecieverId,
             text = message.text,

@@ -4,7 +4,7 @@ import java.util.Date
 
 data class ChatElementModel(
     val id: Int,
-    val userSenderName:String,
+    val userSenderName: String,
     val userPictureResourcesId: Int,
     val userName: String,
     val userLastMessage: String,

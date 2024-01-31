@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.rosavtodorproject2.App
 import com.example.rosavtodorproject2.R
-import com.example.rosavtodorproject2.ui.stateHolder.ChatsFragmentViewModel
+import com.example.rosavtodorproject2.ui.stateHolders.ChatsFragmentViewModel
 
-class ChatsFragment: Fragment(){
+class ChatsFragment : Fragment() {
 
     private val applicationComponent
         get() = App.getInstance().applicationComponent
@@ -38,7 +38,7 @@ class ChatsFragment: Fragment(){
         chatsViewController = ChatsViewController(
             activity = requireActivity(),
             rootView = view,
-            adapter  = adapter,
+            adapter = adapter,
             lifecycleOwner = viewLifecycleOwner,
             viewModel = viewModel,
         ).apply {
@@ -49,6 +49,6 @@ class ChatsFragment: Fragment(){
 
     override fun onDestroyView() {
         super.onDestroyView()
-        chatsViewController=null;
+        chatsViewController = null
     }
 }

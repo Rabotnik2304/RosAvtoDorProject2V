@@ -9,7 +9,7 @@ import com.example.rosavtodorproject2.ui.model.ChatElementModel
 
 class ChatsListViewAdapter(
     chatsDiffCalculator: ChatsDiffCalculator
-): ListAdapter<ChatElementModel, ChatElementViewHolder>(chatsDiffCalculator) {
+) : ListAdapter<ChatElementModel, ChatElementViewHolder>(chatsDiffCalculator) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatElementViewHolder {
 
         val itemView = LayoutInflater.from(parent.context).inflate(
@@ -31,7 +31,7 @@ class ChatsListViewAdapter(
             val action = ChatsFragmentDirections.actionChatsFragmentToConversationFragment(
                 collocutorId = currentList[position].id,
                 collocutorName = currentList[position].userName,
-                collocutorPictureResourceId =currentList[position].userPictureResourcesId,
+                collocutorPictureResourceId = currentList[position].userPictureResourcesId,
             )
 
             Navigation.findNavController(holder.itemView).navigate(action)

@@ -9,6 +9,6 @@ class ChatsDiffCalculator : DiffUtil.ItemCallback<ChatElementModel>() {
     }
 
     override fun areContentsTheSame(oldItem: ChatElementModel, newItem: ChatElementModel): Boolean {
-        return oldItem==newItem
+        return oldItem == newItem
     }
 }

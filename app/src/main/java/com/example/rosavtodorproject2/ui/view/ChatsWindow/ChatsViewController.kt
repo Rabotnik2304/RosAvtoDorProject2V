@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rosavtodorproject2.R
-import com.example.rosavtodorproject2.ui.stateHolder.ChatsFragmentViewModel
+import com.example.rosavtodorproject2.ui.stateHolders.ChatsFragmentViewModel
 
 class ChatsViewController(
     private val activity: Activity,
@@ -16,22 +16,27 @@ class ChatsViewController(
     private val lifecycleOwner: LifecycleOwner,
     private val viewModel: ChatsFragmentViewModel,
 ) {
-    private val chatsRecyclerView:RecyclerView = rootView.findViewById(R.id.chats)
+    private val chatsRecyclerView: RecyclerView = rootView.findViewById(R.id.chats)
 
-    fun setUpViews(){
+    fun setUpViews() {
         setUpChatsList()
     }
 
-    fun setUpChatsList(){
-        val layoutManager = LinearLayoutManager(activity.baseContext,LinearLayoutManager.VERTICAL,false)
-        chatsRecyclerView.adapter=adapter
+    fun setUpChatsList() {
+        val layoutManager =
+            LinearLayoutManager(activity.baseContext, LinearLayoutManager.VERTICAL, false)
+        chatsRecyclerView.adapter = adapter
         chatsRecyclerView.layoutManager = layoutManager
 
-        viewModel.chats.observe(lifecycleOwner){newUsersOrMessages->
+        viewModel.chats.observe(lifecycleOwner) { newUsersOrMessages ->
             adapter.submitList(newUsersOrMessages)
         }
 
-        chatsRecyclerView.addItemDecoration(DividerItemDecoration(activity.baseContext,layoutManager.orientation))
-        chatsRecyclerView.addItemDecoration(ChatElementOffsetItemDecoration(0,0))
+        chatsRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                activity.baseContext,
+                layoutManager.orientation
+            )
+        )
     }
 }

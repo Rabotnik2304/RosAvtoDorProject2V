@@ -17,12 +17,9 @@ import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.data.dataSource.DataSourceHardCode.Companion.currentUser
 import com.example.rosavtodorproject2.databinding.FragmentConversationBinding
 import com.example.rosavtodorproject2.ui.model.MessageElementModel
-import com.example.rosavtodorproject2.ui.stateHolder.ChatsFragmentViewModel
-import com.example.rosavtodorproject2.ui.stateHolder.ConversationFragmentViewModel
-import com.example.rosavtodorproject2.ui.view.ChatsWindow.ChatsListViewAdapter
-import com.example.rosavtodorproject2.ui.view.ChatsWindow.ChatsViewController
+import com.example.rosavtodorproject2.ui.stateHolders.ConversationFragmentViewModel
 import java.util.Calendar
-import java.util.Date
+import java.util.TimeZone
 
 class ConversationFragment : Fragment() {
     var collocutorId = 0
@@ -49,18 +46,18 @@ class ConversationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentConversationBinding.inflate(layoutInflater,container,false)
+        binding = FragmentConversationBinding.inflate(layoutInflater, container, false)
 
-        val args : ConversationFragmentArgs by navArgs()
+        val args: ConversationFragmentArgs by navArgs()
         collocutorId = args.collocutorId
 
         messagesViewController = MessagesViewController(
-            activity= requireActivity(),
+            activity = requireActivity(),
             rootView = binding.root,
-            adapter= adapter,
+            adapter = adapter,
             lifecycleOwner = viewLifecycleOwner,
-            viewModel= viewModel,
-            collocutorId=collocutorId,
+            viewModel = viewModel,
+            collocutorId = collocutorId,
         ).apply { setUpViews() }
 
         return binding.root
@@ -68,35 +65,36 @@ class ConversationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args : ConversationFragmentArgs by navArgs()
+        val args: ConversationFragmentArgs by navArgs()
 
         binding.collocutorName.text = args.collocutorName
 
-        //Я знаю, что некрасиво, но если не так, то при плохом интернете прога тупо упадёт, так что терпим.
+        //Я знаю, что некрасиво, но если не так, то при плохом интернете прога упадёт.
         binding.collocutorPicture.setImageBitmap(
-            AppCompatResources.getDrawable(requireContext(),args.collocutorPictureResourceId)?.
-            toBitmap(requireContext().toPx(70).toInt(), requireContext().toPx(70).toInt())
-                ?:
-            AppCompatResources.getDrawable(requireContext(),R.drawable.empty_person_avatar)?.
-            toBitmap(requireContext().toPx(70).toInt(), requireContext().toPx(70).toInt()))
+            AppCompatResources.getDrawable(requireContext(), args.collocutorPictureResourceId)
+                ?.toBitmap(requireContext().toPx(70).toInt(), requireContext().toPx(70).toInt())
+                ?: AppCompatResources.getDrawable(requireContext(), R.drawable.empty_person_avatar)
+                    ?.toBitmap(requireContext().toPx(70).toInt(), requireContext().toPx(70).toInt())
+        )
 
-        binding.backToChatsPanelButton.setOnClickListener{
+        binding.backToChatsPanelButton.setOnClickListener {
             findNavController().navigate(R.id.action_conversationFragment_to_chatsFragment)
         }
 
         binding.sendMessageButton.setOnClickListener {
             viewModel.sendMessage(
                 MessageElementModel(
-                    id=-1,
+                    id = -1,
                     userSenderId = currentUser.id,
                     userSenderName = currentUser.name,
-                    userRecieverId =  collocutorId,
-                    text= binding.messageEditText.text.toString(),
-                    sendDate= Calendar.getInstance().time.apply { year+=1900 }
+                    userRecieverId = collocutorId,
+                    text = binding.messageEditText.text.toString(),
+                    sendDate = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+2")).time.apply { year += 1900 }
                 )
             )
         }
     }
+
     fun Context.toPx(dp: Int): Float = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
         dp.toFloat(),
@@ -105,6 +103,6 @@ class ConversationFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        messagesViewController=null
+        messagesViewController = null
     }
 }

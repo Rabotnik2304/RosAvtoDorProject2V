@@ -9,7 +9,7 @@ import com.example.rosavtodorproject2.data.repositories.UserRepository
 import com.example.rosavtodorproject2.domain.model.MessageWithUserSender
 import javax.inject.Inject
 
-class  MessageWithUserSenderUseCase @Inject constructor(
+class MessageWithUserSenderUseCase @Inject constructor(
     private val messageRepository: MessagesRepository,
     private val userRepository: UserRepository,
 ) {
@@ -19,26 +19,28 @@ class  MessageWithUserSenderUseCase @Inject constructor(
     val messageWithUserSender: LiveData<List<MessageWithUserSender>> = _messageWithUserSender
 
     init {
-        _messageWithUserSender.addSource(userRepository.userContacts){
+        _messageWithUserSender.addSource(userRepository.userContacts) {
             updateMessageWithUserSender()
         }
-        _messageWithUserSender.addSource(messageRepository.messages){
+        _messageWithUserSender.addSource(messageRepository.messages) {
             updateMessageWithUserSender()
         }
 
     }
-    fun updateUsersAndMessages(){
-        messageRepository.updateMessages()
+
+    fun updateUsersAndMessages() {
         userRepository.updateUsers()
+        messageRepository.updateMessages()
     }
 
-    private fun updateMessageWithUserSender(){
-        val sortedByTimeMessages: List<Message> = messageRepository.messages.value.orEmpty().sortedBy { it.sendDate }
+    private fun updateMessageWithUserSender() {
+        val sortedByTimeMessages: List<Message> =
+            messageRepository.messages.value.orEmpty().sortedBy { it.sendDate }
 
-        val result:List<MessageWithUserSender> = sortedByTimeMessages.map{
+        val result: List<MessageWithUserSender> = sortedByTimeMessages.map {
             MessageWithUserSender(
                 it,
-                if (it.userSenderId!= DataSourceHardCode.currentUser.id) userRepository.userContacts.value.orEmpty()[it.userSenderId] else DataSourceHardCode.currentUser,
+                if (it.userSenderId != DataSourceHardCode.currentUser.id) userRepository.userContacts.value.orEmpty()[it.userSenderId] else DataSourceHardCode.currentUser,
             )
         }
 

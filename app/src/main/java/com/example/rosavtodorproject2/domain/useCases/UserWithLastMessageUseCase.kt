@@ -9,38 +9,43 @@ import com.example.rosavtodorproject2.data.repositories.UserRepository
 import com.example.rosavtodorproject2.domain.model.UserWithLastMessage
 import javax.inject.Inject
 
-class  UserWithLastMessageUseCase @Inject constructor(
+class UserWithLastMessageUseCase @Inject constructor(
     private val messageRepository: MessagesRepository,
     private val userRepository: UserRepository,
 ) {
 
     private val _userWithLastMessage = MediatorLiveData<List<UserWithLastMessage>>()
 
-    val userWithLastMessage:LiveData<List<UserWithLastMessage>> = _userWithLastMessage
+    val userWithLastMessage: LiveData<List<UserWithLastMessage>> = _userWithLastMessage
 
     init {
-        _userWithLastMessage.addSource(userRepository.userContacts){
+        _userWithLastMessage.addSource(userRepository.userContacts) {
             updateUserWithLastMessage()
         }
-        _userWithLastMessage.addSource(messageRepository.messages){
+        _userWithLastMessage.addSource(messageRepository.messages) {
             updateUserWithLastMessage()
         }
 
     }
-    fun updateUsersAndMessages(){
-        messageRepository.updateMessages()
+
+    fun updateUsersAndMessages() {
         userRepository.updateUsers()
+        messageRepository.updateMessages()
     }
 
-    private fun updateUserWithLastMessage(){
-        val conversationIdAndMessage: Map<Int,List<Message>> = messageRepository.messages.value.orEmpty().groupBy { if(it.userSenderId==currentUser.id) it.userRecieverId else it.userSenderId }
-        val conversationIdAndLastMessage : Map<Int,Message> = conversationIdAndMessage.mapValues { it.value.maxBy { message -> message.sendDate}}
+    private fun updateUserWithLastMessage() {
+        val conversationIdAndMessages: Map<Int, List<Message>> =
+            messageRepository.messages.value.orEmpty()
+                .groupBy { if (it.userSenderId == currentUser.id) it.userRecieverId else it.userSenderId }
 
-        val result:List<UserWithLastMessage> = conversationIdAndLastMessage.map{
+        val conversationIdAndLastMessage: Map<Int, Message> =
+            conversationIdAndMessages.mapValues { it.value.maxBy { message -> message.sendDate } }
+
+        val result: List<UserWithLastMessage> = conversationIdAndLastMessage.map {
             UserWithLastMessage(
                 userRepository.userContacts.value.orEmpty()[it.key],
                 it.value,
-                if(it.value.userSenderId==currentUser.id) "Вы:" else userRepository.userContacts.value.orEmpty()[it.value.userSenderId].name+":"
+                if (it.value.userSenderId == currentUser.id) "Вы:" else userRepository.userContacts.value.orEmpty()[it.value.userSenderId].name + ":"
             )
         }
 

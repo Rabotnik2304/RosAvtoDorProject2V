@@ -8,4 +8,4 @@ data class Message(
     val userRecieverId: Int,
     val text: String,
     val sendDate: Date,
-    )
+)

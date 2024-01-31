@@ -9,34 +9,40 @@ import javax.inject.Scope
 
 @Scope
 annotation class AppComponentScope
-@dagger.Component(modules = [DataModule ::class,ChatsViewModelModule::class])
+
+@dagger.Component(modules = [DataModule::class, ChatsViewModelModule::class, ConversationViewModelModule::class])
 @AppComponentScope
 interface ApplicationComponent {
-    fun getUserWithLastMessageUseCase() : UserWithLastMessageUseCase
+    fun getUserWithLastMessageUseCase(): UserWithLastMessageUseCase
     fun getMessageWithUserSenderUseCase(): MessageWithUserSenderUseCase
     fun getChatsViewModelFactory(): ChatsViewModelFactory
     fun getConversationViewModelFactory(): ConversationViewModelFactory
 }
+
 @dagger.Module
-object DataModule{
+object DataModule {
     @Provides
     @AppComponentScope
     fun getDataSource() = DataSourceHardCode()
 }
 
 @dagger.Module
-object ChatsViewModelModule{
+object ChatsViewModelModule {
     @Provides
     @AppComponentScope
-    fun getChatsViewModelFactory(userWithLastMessageUseCase: UserWithLastMessageUseCase): ChatsViewModelFactory{
+    fun getChatsViewModelFactory(userWithLastMessageUseCase: UserWithLastMessageUseCase): ChatsViewModelFactory {
         return ChatsViewModelFactory(userWithLastMessageUseCase)
     }
 }
+
 @dagger.Module
-object ConversationViewModelModule{
+object ConversationViewModelModule {
     @Provides
     @AppComponentScope
-    fun getConversationViewModelFactory(messagesRepository:MessagesRepository,messageWithUserSenderUseCase: MessageWithUserSenderUseCase): ConversationViewModelFactory{
-        return ConversationViewModelFactory(messagesRepository,messageWithUserSenderUseCase)
+    fun getConversationViewModelFactory(
+        messagesRepository: MessagesRepository,
+        messageWithUserSenderUseCase: MessageWithUserSenderUseCase
+    ): ConversationViewModelFactory {
+        return ConversationViewModelFactory(messagesRepository, messageWithUserSenderUseCase)
     }
 }

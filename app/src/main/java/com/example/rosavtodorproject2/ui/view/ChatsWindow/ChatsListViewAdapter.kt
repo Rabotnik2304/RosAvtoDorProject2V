@@ -5,22 +5,20 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ListAdapter
 import com.example.rosavtodorproject2.R
+import com.example.rosavtodorproject2.databinding.ChatElementBinding
+import com.example.rosavtodorproject2.databinding.MessageElementBinding
 import com.example.rosavtodorproject2.ui.model.ChatElementModel
+import com.example.rosavtodorproject2.ui.view.ConversationWindow.MessageElementViewHolder
 
 class ChatsListViewAdapter(
     chatsDiffCalculator: ChatsDiffCalculator
 ) : ListAdapter<ChatElementModel, ChatElementViewHolder>(chatsDiffCalculator) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatElementViewHolder {
-
-        val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.chat_element,
-            parent,
-            false
-        )
-
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val chatElementViewBinding = ChatElementBinding.inflate(layoutInflater, parent, false)
 
         return ChatElementViewHolder(
-            itemView
+            chatElementViewBinding
         )
     }
 

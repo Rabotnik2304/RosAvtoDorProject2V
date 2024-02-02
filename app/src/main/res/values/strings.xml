@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">RosAvtoDorProject2</string>
-    <string name="search_header">Поиск</string>
-    <string name="ros_avto_dor_bot_mame">Бот помощник росавтодора</string>
+    <string name="go_to_interactive_map_text">Перейти к интерактивной карте</string>
+    <string name="back_to_chats_fragment_text">Вернуться к панели чатов</string>
+    <string name="ros_avto_dor_bot_mame">Бот помощник рос авто дора</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

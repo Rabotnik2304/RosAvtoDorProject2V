@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.rosavtodorproject2.App
 import com.example.rosavtodorproject2.R
+import com.example.rosavtodorproject2.databinding.FragmentChatsBinding
+import com.example.rosavtodorproject2.databinding.FragmentConversationBinding
 import com.example.rosavtodorproject2.ui.stateHolders.ChatsFragmentViewModel
 
 class ChatsFragment : Fragment() {
 
+    lateinit var binding: FragmentChatsBinding
     private val applicationComponent
         get() = App.getInstance().applicationComponent
 
@@ -33,20 +37,27 @@ class ChatsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_chats, container, false)
+    ): View {
+
+        binding = FragmentChatsBinding.inflate(layoutInflater, container, false)
+
         chatsViewController = ChatsViewController(
             activity = requireActivity(),
-            rootView = view,
+            rootView = binding.root,
             adapter = adapter,
             lifecycleOwner = viewLifecycleOwner,
             viewModel = viewModel,
         ).apply {
             setUpViews()
         }
-        return view
+        return binding.root
     }
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.goToInteractiveMapPanel.root.setOnClickListener{
+            findNavController().navigate(R.id.action_chatsFragment_to_interactiveMapFragment)
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         chatsViewController = null

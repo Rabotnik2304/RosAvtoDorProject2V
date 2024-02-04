@@ -1,7 +1,9 @@
 package com.example.rosavtodorproject2.ui.stateHolders
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
+import com.example.rosavtodorproject2.data.models.User
 import com.example.rosavtodorproject2.data.repositories.UserRepository
 
 import com.example.rosavtodorproject2.domain.model.UserWithLastMessage
@@ -13,7 +15,8 @@ class ChatsFragmentViewModel @Inject constructor(
     val userRepository: UserRepository,
     val userWithLastMessageUseCase: UserWithLastMessageUseCase,
 ) : ViewModel() {
-    val chats = userWithLastMessageUseCase.userWithLastMessage.map {
+    val currentUser: LiveData<User> = userRepository.currentUser
+    val chats: LiveData<List<ChatElementModel>> = userWithLastMessageUseCase.userWithLastMessage.map {
         it.map { userWithLastMessage -> userWithLastMessage.transformToItemModel() }
     }
 

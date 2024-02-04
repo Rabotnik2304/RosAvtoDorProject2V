@@ -1,10 +1,19 @@
 package com.example.rosavtodorproject2.ui.view.ChatsWindow
 
+import android.content.Context
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -73,8 +82,22 @@ class ChatsFragment : Fragment() {
     fun setUpToolBar(){
 
         val navController = NavHostFragment.findNavController(this)
+
         val sideBar = binding.navView
         sideBar.setupWithNavController(navController)
+
+        val profileMenuHeader = sideBar.getHeaderView(0)
+        val userNameTextView = profileMenuHeader.findViewById<TextView>(R.id.current_user_name)
+
+        viewModel.currentUser.observe(viewLifecycleOwner) {
+            userNameTextView.text = it.name
+        }
+
+        val userNameProfilePicture = profileMenuHeader.findViewById<ImageView>(R.id.current_user_image)
+
+        viewModel.currentUser.observe(viewLifecycleOwner) {
+            userNameProfilePicture.setBackgroundResource(it.userPictureResourcesId)
+        }
 
         val appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout = binding.drawerLayout)
         val toolbar = binding.profileAndSearchPanel

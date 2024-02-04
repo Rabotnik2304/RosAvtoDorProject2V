@@ -36,9 +36,11 @@ class ConversationFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = MessagesListViewAdapter(MessagesDiffCalculator())
         viewModel = ViewModelProvider(this, applicationComponent.getConversationViewModelFactory())
             .get(ConversationFragmentViewModel::class.java)
+
+        adapter = MessagesListViewAdapter(MessagesDiffCalculator(),viewModel.currentUser.value!!.id)
+
     }
 
     override fun onCreateView(

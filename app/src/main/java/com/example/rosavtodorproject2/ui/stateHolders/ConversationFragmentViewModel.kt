@@ -19,6 +19,7 @@ class ConversationFragmentViewModel @Inject constructor(
     val userRepository:UserRepository,
     val messageWithUserSenderUseCase: MessageWithUserSenderUseCase,
 ) : ViewModel() {
+    val currentUser: LiveData<User> = userRepository.currentUser
     val messages: LiveData<List<MessageElementModel>> =
         messageWithUserSenderUseCase.messageWithUserSender.map {
             it.map { messageWithUserSender -> messageWithUserSender.transformToItemModel() }
@@ -34,7 +35,7 @@ class ConversationFragmentViewModel @Inject constructor(
 
     fun sendMessage(userRecieverId:Int, text :String, sendDate: Date) {
         messagesRepository.addMessage(
-            userSenderId = userRepository.currentUser.value!!.id,
+            userSenderId = currentUser.value!!.id,
             userRecieverId = userRecieverId,
             text = text,
             sendDate = sendDate

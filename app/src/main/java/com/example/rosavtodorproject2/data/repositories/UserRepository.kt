@@ -12,7 +12,7 @@ class UserRepository @Inject constructor(
     val dataSource: DataSourceHardCode
 ) {
     private val _currentUser = MutableLiveData<User>()
-    val currentUser = _currentUser
+    val currentUser: LiveData<User>  = _currentUser
 
     private val _userContacts = MutableLiveData<List<User>>(emptyList())
     val userContacts: LiveData<List<User>> = _userContacts

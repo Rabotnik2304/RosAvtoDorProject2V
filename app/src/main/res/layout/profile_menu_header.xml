@@ -22,4 +22,5 @@
         android:paddingTop="8dp"
         android:textColor="@color/black"
         android:text="Где я?"/>
+
 </LinearLayout>

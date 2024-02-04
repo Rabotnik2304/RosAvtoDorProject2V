@@ -6,15 +6,18 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.children
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -97,6 +100,11 @@ class ChatsFragment : Fragment() {
 
         viewModel.currentUser.observe(viewLifecycleOwner) {
             userNameProfilePicture.setBackgroundResource(it.userPictureResourcesId)
+        }
+
+        sideBar.menu[0].setOnMenuItemClickListener {
+            CurrentUserNameEditingDialogFragment(viewModel.currentUser.value?.name).show(getParentFragmentManager(),"NAME EDITING")
+            true
         }
 
         val appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout = binding.drawerLayout)

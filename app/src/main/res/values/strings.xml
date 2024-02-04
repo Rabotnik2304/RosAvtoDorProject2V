@@ -3,6 +3,8 @@
     <string name="go_to_interactive_map_text">Перейти к интерактивной карте</string>
     <string name="back_to_chats_fragment_text">Вернуться к панели чатов</string>
     <string name="ros_avto_dor_bot_mame">Бот помощник рос авто дора</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change_current_user_name_option">Изменить имя</string>
+    <string name="dialog_window_sentence">Чтобы изменить своё имя, просто введите новое в поле под старым</string>
+    <string name="dialog_window_positive_button_text">Изменить</string>
+    <string name="dialog_window_negative_button_text">Отменить</string>
 </resources>

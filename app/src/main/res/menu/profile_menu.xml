@@ -2,10 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
  <item
-     android:id="@+id/current_user_name"
-     android:title="user name"
-     android:icon="@drawable/empty_person_avatar"
+     android:id="@+id/change_current_user_name"
+     android:title="@string/change_current_user_name_option"
+     android:icon="@drawable/option_icon"
      >
+
 
  </item>
 </menu>

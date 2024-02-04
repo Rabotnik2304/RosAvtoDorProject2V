@@ -2,6 +2,7 @@ package com.example.rosavtodorproject2.ioc
 
 import com.example.rosavtodorproject2.data.dataSource.DataSourceHardCode
 import com.example.rosavtodorproject2.data.repositories.MessagesRepository
+import com.example.rosavtodorproject2.data.repositories.UserRepository
 import com.example.rosavtodorproject2.domain.useCases.MessageWithUserSenderUseCase
 import com.example.rosavtodorproject2.domain.useCases.UserWithLastMessageUseCase
 import dagger.Provides
@@ -30,8 +31,11 @@ object DataModule {
 object ChatsViewModelModule {
     @Provides
     @AppComponentScope
-    fun getChatsViewModelFactory(userWithLastMessageUseCase: UserWithLastMessageUseCase): ChatsViewModelFactory {
-        return ChatsViewModelFactory(userWithLastMessageUseCase)
+    fun getChatsViewModelFactory(
+        userRepository: UserRepository,
+        userWithLastMessageUseCase: UserWithLastMessageUseCase
+    ): ChatsViewModelFactory {
+        return ChatsViewModelFactory(userRepository,userWithLastMessageUseCase)
     }
 }
 
@@ -41,8 +45,9 @@ object ConversationViewModelModule {
     @AppComponentScope
     fun getConversationViewModelFactory(
         messagesRepository: MessagesRepository,
+        userRepository: UserRepository,
         messageWithUserSenderUseCase: MessageWithUserSenderUseCase
     ): ConversationViewModelFactory {
-        return ConversationViewModelFactory(messagesRepository, messageWithUserSenderUseCase)
+        return ConversationViewModelFactory(messagesRepository, userRepository,messageWithUserSenderUseCase)
     }
 }

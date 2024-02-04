@@ -9,7 +9,7 @@
     <ImageView
         android:id= "@+id/collocutor_profile_panel"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="56dp"
         android:background="#4E53D3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -18,7 +18,7 @@
         android:id = "@+id/back_to_chats_panel_button"
         android:layout_width="40dp"
         android:layout_height="30dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="13dp"
         android:layout_marginStart="10dp"
         android:background="@drawable/back_arrow"
         app:layout_constraintStart_toStartOf="@+id/collocutor_profile_panel"

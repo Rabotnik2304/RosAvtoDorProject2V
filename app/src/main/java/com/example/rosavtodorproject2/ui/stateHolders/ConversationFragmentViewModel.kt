@@ -28,7 +28,8 @@ class ConversationFragmentViewModel @Inject constructor(
     init {
         updateUsersAndMessages()
     }
-
+    //Я оставляю здесь отдельный метод, чтобы в будущем добавить SwipeToRefresh, к списку сообщений
+    //в беседе
     fun updateUsersAndMessages() {
         messageWithUserSenderUseCase.updateUsersAndMessages()
     }

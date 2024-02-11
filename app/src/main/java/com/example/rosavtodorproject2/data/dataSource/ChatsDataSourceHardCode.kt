@@ -5,7 +5,7 @@ import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.data.models.User
 import java.util.Date
 
-class DataSourceHardCode {
+class ChatsDataSourceHardCode {
     companion object {
         val currentUser = User(
             -1,

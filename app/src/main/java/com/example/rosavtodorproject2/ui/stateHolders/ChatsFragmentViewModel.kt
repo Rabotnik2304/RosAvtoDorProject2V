@@ -23,7 +23,7 @@ class ChatsFragmentViewModel @Inject constructor(
     init {
         updateUsersAndLastMessages()
     }
-
+    //Я оставляю здесь отдельный метод, чтобы в будущем добавить SwipeToRefresh, к списку чатов
     fun updateUsersAndLastMessages() {
         userWithLastMessageUseCase.updateUsersAndMessages()
     }

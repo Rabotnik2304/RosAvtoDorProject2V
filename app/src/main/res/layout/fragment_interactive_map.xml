@@ -46,5 +46,16 @@
         app:layout_constraintTop_toBottomOf="@+id/back_to_chats_panel"
         app:layout_constraintBottom_toBottomOf="parent"
         />
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/add_point_to_map_button"
+        android:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:borderWidth="0dp"
+        android:contentDescription="TODO" />
 </androidx.constraintlayout.widget.ConstraintLayout>

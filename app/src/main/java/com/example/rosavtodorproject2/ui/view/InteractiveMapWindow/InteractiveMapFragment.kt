@@ -1,9 +1,13 @@
 package com.example.rosavtodorproject2.ui.view.InteractiveMapWindow
 
 import android.os.Bundle
+import android.view.ContextThemeWrapper
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -16,6 +20,7 @@ import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.mapview.MapView
+import com.yandex.runtime.Runtime.getApplicationContext
 import com.yandex.runtime.image.ImageProvider
 
 
@@ -39,7 +44,7 @@ class InteractiveMapFragment : Fragment() {
     ): View {
         binding = FragmentInteractiveMapBinding.inflate(layoutInflater, container, false)
 
-        MapKitFactory.initialize(requireContext())
+        MapKitFactory.initialize(getApplicationContext())
         mapView = binding.mapview
 
         mapView.map.move(
@@ -62,6 +67,12 @@ class InteractiveMapFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.backToChatsPanelButton.setOnClickListener {
             findNavController().navigate(R.id.action_interactiveMapFragment_to_chatsFragment)
+        }
+        binding.addPointToMapButton.setOnClickListener {
+            val popup = PopupMenu(requireContext(), it)
+            val inflater: MenuInflater = popup.menuInflater
+            inflater.inflate(R.menu.add_point_menu, popup.menu)
+            popup.show()
         }
     }
 

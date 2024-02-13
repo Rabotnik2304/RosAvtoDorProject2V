@@ -5,8 +5,6 @@
      android:id="@+id/change_current_user_name"
      android:title="@string/change_current_user_name_option"
      android:icon="@drawable/option_icon"
-     >
+     />
 
-
- </item>
 </menu>

@@ -5,6 +5,11 @@
     <string name="ros_avto_dor_bot_mame">Бот помощник рос авто дора</string>
     <string name="change_current_user_name_option">Изменить имя</string>
     <string name="dialog_window_sentence">Чтобы изменить своё имя, просто введите новое в поле под старым</string>
+    <string name="add_point_to_interactive_map">Чтобы изменить своё имя, просто введите новое в поле под старым</string>
+    <string name="road_accident_menu_item_title">ДТП</string>
+    <string name="pothole_menu_item_title">Яма</string>
+    <string name="obstruction_menu_item_title">Преграда</string>
+    <string name="bandit_menu_item_title">Бандит</string>
     <string name="dialog_window_positive_button_text">Изменить</string>
     <string name="dialog_window_negative_button_text">Отменить</string>
 </resources>

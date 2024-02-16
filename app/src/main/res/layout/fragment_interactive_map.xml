@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.view.InteractiveMapWindow.InteractiveMapFragment">
+
+    <ImageView
+        android:id= "@+id/back_to_chats_panel"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#4E53D3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:id = "@+id/back_to_chats_panel_button"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/back_arrow"
+        app:layout_constraintStart_toStartOf="@+id/back_to_chats_panel"
+        app:layout_constraintTop_toTopOf="@+id/back_to_chats_panel"
+        />
+
+    <TextView
+        android:id="@+id/collocutor_name"
+        android:layout_width="wrap_content"
+        android:layout_height ="wrap_content"
+        android:gravity="start"
+        android:layout_marginStart="18dp"
+        android:text="@string/back_to_chats_fragment_text"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@id/back_to_chats_panel_button"
+        app:layout_constraintTop_toTopOf="@+id/back_to_chats_panel_button"
+        />
+    <com.yandex.mapkit.mapview.MapView
+        android:id="@+id/mapview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_to_chats_panel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_point_to_map_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/add_point_to_map_button_icon"
+        android:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:borderWidth="0dp"
+        android:contentDescription="@string/add_point_to_interactive_map" />
+</androidx.constraintlayout.widget.ConstraintLayout>

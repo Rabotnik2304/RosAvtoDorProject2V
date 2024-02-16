@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_chatsFragment_to_conversationFragment"
             app:destination="@id/conversationFragment" />
+        <action
+            android:id="@+id/action_chatsFragment_to_interactiveMapFragment"
+            app:destination="@id/interactiveMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/conversationFragment"
@@ -33,5 +36,14 @@
             android:name="collocutorId"
             app:argType="integer"
             android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/interactiveMapFragment"
+        android:name="com.example.rosavtodorproject2.ui.view.InteractiveMapWindow.InteractiveMapFragment"
+        android:label="fragment_interactive_map"
+        tools:layout="@layout/fragment_interactive_map" >
+        <action
+            android:id="@+id/action_interactiveMapFragment_to_chatsFragment"
+            app:destination="@id/chatsFragment" />
     </fragment>
 </navigation>

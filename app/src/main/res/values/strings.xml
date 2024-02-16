@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">RosAvtoDorProject2</string>
-    <string name="search_header">Поиск</string>
-    <string name="ros_avto_dor_bot_mame">Бот помощник росавтодора</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="go_to_interactive_map_text">Перейти к интерактивной карте</string>
+    <string name="back_to_chats_fragment_text">Вернуться к панели чатов</string>
+    <string name="ros_avto_dor_bot_mame">Бот помощник рос авто дора</string>
+    <string name="change_current_user_name_option">Изменить имя</string>
+    <string name="dialog_window_sentence">Чтобы изменить своё имя, просто введите новое в поле под старым</string>
+    <string name="add_point_to_interactive_map">Чтобы изменить своё имя, просто введите новое в поле под старым</string>
+    <string name="road_accident_menu_item_title">ДТП</string>
+    <string name="pothole_menu_item_title">Яма</string>
+    <string name="obstruction_menu_item_title">Преграда</string>
+    <string name="bandit_menu_item_title">Бандит</string>
+    <string name="dialog_window_positive_button_text">Изменить</string>
+    <string name="dialog_window_negative_button_text">Отменить</string>
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+ <item
+     android:id="@+id/change_current_user_name"
+     android:title="@string/change_current_user_name_option"
+     android:icon="@drawable/option_icon"
+     />
+
+</menu>

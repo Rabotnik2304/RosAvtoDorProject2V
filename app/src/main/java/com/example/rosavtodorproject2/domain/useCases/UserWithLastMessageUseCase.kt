@@ -2,7 +2,6 @@ package com.example.rosavtodorproject2.domain.useCases
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import com.example.rosavtodorproject2.data.dataSource.DataSourceHardCode.Companion.currentUser
 import com.example.rosavtodorproject2.data.models.Message
 import com.example.rosavtodorproject2.data.repositories.MessagesRepository
 import com.example.rosavtodorproject2.data.repositories.UserRepository
@@ -19,6 +18,9 @@ class UserWithLastMessageUseCase @Inject constructor(
     val userWithLastMessage: LiveData<List<UserWithLastMessage>> = _userWithLastMessage
 
     init {
+        _userWithLastMessage.addSource(userRepository.currentUser) {
+            updateUserWithLastMessage()
+        }
         _userWithLastMessage.addSource(userRepository.userContacts) {
             updateUserWithLastMessage()
         }
@@ -29,6 +31,7 @@ class UserWithLastMessageUseCase @Inject constructor(
     }
 
     fun updateUsersAndMessages() {
+        userRepository.updateCurrentUser()
         userRepository.updateUsers()
         messageRepository.updateMessages()
     }
@@ -36,7 +39,7 @@ class UserWithLastMessageUseCase @Inject constructor(
     private fun updateUserWithLastMessage() {
         val conversationIdAndMessages: Map<Int, List<Message>> =
             messageRepository.messages.value.orEmpty()
-                .groupBy { if (it.userSenderId == currentUser.id) it.userRecieverId else it.userSenderId }
+                .groupBy { if (it.userSenderId == userRepository.currentUser.value?.id) it.userRecieverId else it.userSenderId }
 
         val conversationIdAndLastMessage: Map<Int, Message> =
             conversationIdAndMessages.mapValues { it.value.maxBy { message -> message.sendDate } }
@@ -45,7 +48,7 @@ class UserWithLastMessageUseCase @Inject constructor(
             UserWithLastMessage(
                 userRepository.userContacts.value.orEmpty()[it.key],
                 it.value,
-                if (it.value.userSenderId == currentUser.id) "Вы:" else userRepository.userContacts.value.orEmpty()[it.value.userSenderId].name + ":"
+                if (it.value.userSenderId == userRepository.currentUser.value?.id) "Вы:" else userRepository.userContacts.value.orEmpty()[it.value.userSenderId].name + ":"
             )
         }
 

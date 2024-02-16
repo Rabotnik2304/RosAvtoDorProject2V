@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rosavtodorproject2.App
 import com.example.rosavtodorproject2.R
-import com.example.rosavtodorproject2.data.dataSource.DataSourceHardCode.Companion.currentUser
 import com.example.rosavtodorproject2.databinding.FragmentConversationBinding
 import com.example.rosavtodorproject2.ui.model.MessageElementModel
 import com.example.rosavtodorproject2.ui.stateHolders.ConversationFragmentViewModel
@@ -37,9 +36,11 @@ class ConversationFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = MessagesListViewAdapter(MessagesDiffCalculator())
         viewModel = ViewModelProvider(this, applicationComponent.getConversationViewModelFactory())
             .get(ConversationFragmentViewModel::class.java)
+
+        adapter = MessagesListViewAdapter(MessagesDiffCalculator(),viewModel.currentUser.value!!.id)
+
     }
 
     override fun onCreateView(
@@ -83,14 +84,9 @@ class ConversationFragment : Fragment() {
 
         binding.sendMessageButton.setOnClickListener {
             viewModel.sendMessage(
-                MessageElementModel(
-                    id = 0, // значение затычка, оно всё равно не используется
-                    userSenderId = currentUser.id,
-                    userSenderName = currentUser.name,
-                    userRecieverId = collocutorId,
-                    text = binding.messageEditText.text.toString(),
-                    sendDate = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+2")).time
-                )
+                userRecieverId = collocutorId,
+                text = binding.messageEditText.text.toString(),
+                sendDate = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+2")).time
             )
         }
     }

@@ -2,7 +2,6 @@ package com.example.rosavtodorproject2.domain.useCases
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import com.example.rosavtodorproject2.data.dataSource.DataSourceHardCode
 import com.example.rosavtodorproject2.data.models.Message
 import com.example.rosavtodorproject2.data.repositories.MessagesRepository
 import com.example.rosavtodorproject2.data.repositories.UserRepository
@@ -19,6 +18,9 @@ class MessageWithUserSenderUseCase @Inject constructor(
     val messageWithUserSender: LiveData<List<MessageWithUserSender>> = _messageWithUserSender
 
     init {
+        _messageWithUserSender.addSource(userRepository.currentUser) {
+            updateMessageWithUserSender()
+        }
         _messageWithUserSender.addSource(userRepository.userContacts) {
             updateMessageWithUserSender()
         }
@@ -29,6 +31,7 @@ class MessageWithUserSenderUseCase @Inject constructor(
     }
 
     fun updateUsersAndMessages() {
+        userRepository.updateCurrentUser()
         userRepository.updateUsers()
         messageRepository.updateMessages()
     }
@@ -40,7 +43,7 @@ class MessageWithUserSenderUseCase @Inject constructor(
         val result: List<MessageWithUserSender> = sortedByTimeMessages.map {
             MessageWithUserSender(
                 it,
-                if (it.userSenderId != DataSourceHardCode.currentUser.id) userRepository.userContacts.value.orEmpty()[it.userSenderId] else DataSourceHardCode.currentUser,
+                if (it.userSenderId != userRepository.currentUser.value?.id) userRepository.userContacts.value.orEmpty()[it.userSenderId] else userRepository.currentUser.value!!,
             )
         }
 

@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -68,10 +71,9 @@ class InteractiveMapFragment : Fragment() {
         binding.backToChatsPanelButton.setOnClickListener {
             findNavController().navigate(R.id.action_interactiveMapFragment_to_chatsFragment)
         }
-        binding.addPointToMapButton.setOnClickListener {
+        binding.addPointToMapFab.setOnClickListener {
             val popup = PopupMenu(requireContext(), it)
-            val inflater: MenuInflater = popup.menuInflater
-            inflater.inflate(R.menu.add_point_menu, popup.menu)
+            popup.inflate(R.menu.add_point_menu)
             popup.show()
         }
     }

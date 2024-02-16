@@ -20,13 +20,11 @@ import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.databinding.FragmentChatsBinding
 import com.example.rosavtodorproject2.ui.stateHolders.ChatsFragmentViewModel
 
-
 class ChatsFragment : Fragment() {
 
     lateinit var binding: FragmentChatsBinding
     private val applicationComponent
         get() = App.getInstance().applicationComponent
-
 
     private lateinit var adapter: ChatsListViewAdapter
     private var chatsViewController: ChatsViewController? = null

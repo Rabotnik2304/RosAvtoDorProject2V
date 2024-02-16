@@ -2,15 +2,16 @@ package com.example.rosavtodorproject2.ui.view.ChatsWindow
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.rosavtodorproject2.R
 
-class CurrentUserNameEditingDialogFragment(private val targetFragment:ChatsFragment,private val currentUserOldName:String?) : DialogFragment() {
+class CurrentUserNameEditingDialogFragment(
+    private val targetFragment:NewCurrentUserNameReciever,
+    private val currentUserOldName:String?
+    ) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -26,7 +27,7 @@ class CurrentUserNameEditingDialogFragment(private val targetFragment:ChatsFragm
             )
                 .setPositiveButton(R.string.dialog_window_positive_button_text)
                 { _, _ ->
-                    (targetFragment as NewCurrentUserNameReciever).newCurrentUserNameRecieve(
+                    targetFragment.newCurrentUserNameRecieve(
                         dialog?.findViewById<EditText>(R.id.current_user_new_name)?.text.toString())
                 }
                 .setNegativeButton(R.string.dialog_window_negative_button_text)

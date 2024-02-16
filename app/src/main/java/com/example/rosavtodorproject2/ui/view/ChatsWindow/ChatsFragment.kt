@@ -1,21 +1,12 @@
 package com.example.rosavtodorproject2.ui.view.ChatsWindow
 
-import android.content.Context
-import android.content.res.Resources
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.children
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
@@ -30,7 +21,7 @@ import com.example.rosavtodorproject2.databinding.FragmentChatsBinding
 import com.example.rosavtodorproject2.ui.stateHolders.ChatsFragmentViewModel
 
 
-class ChatsFragment : Fragment(),NewCurrentUserNameReciever {
+class ChatsFragment : Fragment() {
 
     lateinit var binding: FragmentChatsBinding
     private val applicationComponent
@@ -72,17 +63,20 @@ class ChatsFragment : Fragment(),NewCurrentUserNameReciever {
 
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.goToInteractiveMapPanel.root.setOnClickListener{
+        binding.goToInteractiveMapPanel.root.setOnClickListener {
             findNavController().navigate(R.id.action_chatsFragment_to_interactiveMapFragment)
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         chatsViewController = null
     }
-    fun setUpToolBar(){
+
+    fun setUpToolBar() {
 
         val navController = NavHostFragment.findNavController(this)
 
@@ -96,31 +90,35 @@ class ChatsFragment : Fragment(),NewCurrentUserNameReciever {
             userNameTextView.text = it.name
         }
 
-        val userNameProfilePicture = profileMenuHeader.findViewById<ImageView>(R.id.current_user_image)
+        val userNameProfilePicture =
+            profileMenuHeader.findViewById<ImageView>(R.id.current_user_image)
 
         viewModel.currentUser.observe(viewLifecycleOwner) {
             userNameProfilePicture.setBackgroundResource(it.userPictureResourcesId)
         }
 
         sideBar.menu[0].setOnMenuItemClickListener {
-            CurrentUserNameEditingDialogFragment(this,viewModel.currentUser.value?.name).show(parentFragmentManager,"NAME EDITING")
+            CurrentUserNameEditingDialogFragment(
+                object : NewCurrentUserNameReciever {
+                    override fun newCurrentUserNameRecieve(newCurrentUserName: String) =
+                        viewModel.setNewCurrentUserName(newCurrentUserName)
+                },
+                viewModel.currentUser.value?.name
+            ).show(parentFragmentManager, "NAME EDITING")
             true
         }
 
-        val appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout = binding.drawerLayout)
+        val appBarConfiguration =
+            AppBarConfiguration(navController.graph, drawerLayout = binding.drawerLayout)
         val toolbar = binding.profileAndSearchPanel
 
-        toolbar.setupWithNavController(navController,appBarConfiguration)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
 
-        toolbar.children.forEach{
-            if(it is ImageButton){
-                it.scaleX=1.5f
-                it.scaleY=1.5f
+        toolbar.children.forEach {
+            if (it is ImageButton) {
+                it.scaleX = 1.5f
+                it.scaleY = 1.5f
             }
         }
-    }
-
-    override fun newCurrentUserNameRecieve(newCurrentUserName: String) {
-        viewModel.setNewCurrentUserName(newCurrentUserName)
     }
 }

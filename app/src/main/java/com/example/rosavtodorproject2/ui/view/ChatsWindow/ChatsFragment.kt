@@ -30,7 +30,7 @@ import com.example.rosavtodorproject2.databinding.FragmentChatsBinding
 import com.example.rosavtodorproject2.ui.stateHolders.ChatsFragmentViewModel
 
 
-class ChatsFragment : Fragment() {
+class ChatsFragment : Fragment(),NewCurrentUserNameReciever {
 
     lateinit var binding: FragmentChatsBinding
     private val applicationComponent
@@ -103,7 +103,7 @@ class ChatsFragment : Fragment() {
         }
 
         sideBar.menu[0].setOnMenuItemClickListener {
-            CurrentUserNameEditingDialogFragment(viewModel.currentUser.value?.name).show(getParentFragmentManager(),"NAME EDITING")
+            CurrentUserNameEditingDialogFragment(this,viewModel.currentUser.value?.name).show(parentFragmentManager,"NAME EDITING")
             true
         }
 
@@ -118,5 +118,9 @@ class ChatsFragment : Fragment() {
                 it.scaleY=1.5f
             }
         }
+    }
+
+    override fun newCurrentUserNameRecieve(newCurrentUserName: String) {
+        viewModel.setNewCurrentUserName(newCurrentUserName)
     }
 }

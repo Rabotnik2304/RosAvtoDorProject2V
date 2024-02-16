@@ -9,6 +9,7 @@ import com.example.rosavtodorproject2.data.repositories.UserRepository
 import com.example.rosavtodorproject2.domain.model.UserWithLastMessage
 import com.example.rosavtodorproject2.domain.useCases.UserWithLastMessageUseCase
 import com.example.rosavtodorproject2.ui.model.ChatElementModel
+import com.example.rosavtodorproject2.ui.view.ChatsWindow.NewCurrentUserNameReciever
 import javax.inject.Inject
 
 class ChatsFragmentViewModel @Inject constructor(
@@ -27,7 +28,9 @@ class ChatsFragmentViewModel @Inject constructor(
     fun updateUsersAndLastMessages() {
         userWithLastMessageUseCase.updateUsersAndMessages()
     }
-
+    fun setNewCurrentUserName(newCurrentUserName:String){
+        userRepository.setNewNameToCurrentUser(newCurrentUserName)
+    }
     private fun UserWithLastMessage.transformToItemModel() = ChatElementModel(
         id = user.id,
         userSenderName = senderName,

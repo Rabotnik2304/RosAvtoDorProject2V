@@ -16,6 +16,10 @@ class UserRepository @Inject constructor(
 
     private val _userContacts = MutableLiveData<List<User>>(emptyList())
     val userContacts: LiveData<List<User>> = _userContacts
+    fun setNewNameToCurrentUser(newCurrentUserName:String){
+        ChatsDataSourceHardCode.currentUser.name=newCurrentUserName;
+        updateCurrentUser()
+    }
     fun updateUsers() {
         _userContacts.value = dataSource.loadUserContacts()
     }

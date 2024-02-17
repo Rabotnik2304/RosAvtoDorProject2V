@@ -63,20 +63,10 @@ class ChatsListAdapter(
                     R.drawable.empty_person_avatar
                 )?.toBitmap(dpToPx(70), dpToPx(70))
             )
-            itemChatBinding.userLastMessage.text =
-                smallPartOfMessage(chatElementModel.userSenderName, chatElementModel.userLastMessage)
+            itemChatBinding.userLastMessage.text = chatElementModel.userLastMessage
 
             val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY)
             itemChatBinding.userLastMessageDate.text = sdf.format(chatElementModel.userLastMessageDate)
-        }
-
-        fun smallPartOfMessage(senderName: String, message: String): String {
-            val fullMessageText = "$senderName $message"
-            if (fullMessageText.length < 27) {
-                return fullMessageText
-            } else {
-                return fullMessageText.substring(0, 26) + "..."
-            }
         }
 
         private fun dpToPx(dp: Int): Int = (dp * Resources.getSystem().displayMetrics.density).toInt()

@@ -79,13 +79,11 @@ class ChatsFragment : Fragment() {
         }
 
         sideBar.menu[0].setOnMenuItemClickListener {
-            CurrentUserNameEditingDialogFragment(
-                object : NewCurrentUserNameReciever {
-                    override fun newCurrentUserNameRecieve(newCurrentUserName: String) =
-                        viewModel.setNewCurrentUserName(newCurrentUserName)
-                },
-                viewModel.currentUser.value?.name
-            ).show(parentFragmentManager, "NAME EDITING")
+            CurrentUserNameEditingDialogFragment(viewModel.currentUser.value?.name)
+            { newCurrentUserName: String ->
+                viewModel.setNewCurrentUserName(newCurrentUserName)
+            }
+                .show(parentFragmentManager, "NAME EDITING")
             true
         }
 
@@ -103,6 +101,7 @@ class ChatsFragment : Fragment() {
             }
         }
     }
+
     fun setUpChatsList() {
 
         val chatsRecyclerView: RecyclerView = binding.chats

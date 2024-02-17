@@ -37,8 +37,9 @@ class ChatsListAdapter(
                 collocutorName = currentList[position].userName,
                 collocutorPictureResourceId = currentList[position].userPictureResourcesId,
             )
+            val r = it
 
-            Navigation.findNavController(holder.itemView).navigate(action)
+            Navigation.findNavController(it).navigate(action)
         }
         holder.onBind(currentList[position])
     }
@@ -50,8 +51,8 @@ class ChatsListAdapter(
             itemChatBinding.userName.text = chatElementModel.userName
 
             itemChatBinding.userPicture.setImageBitmap(
-                //Я знаю, что некрасиво, но если не так, то при плохом интернете прога упадёт.
 
+                //Я знаю, что некрасиво, но если не так, то при плохом интернете прога упадёт.
                 AppCompatResources.getDrawable(
                     itemView.context,
                     chatElementModel.userPictureResourcesId

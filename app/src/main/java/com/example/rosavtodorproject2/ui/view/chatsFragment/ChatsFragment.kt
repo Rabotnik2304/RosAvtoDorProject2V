@@ -97,8 +97,9 @@ class ChatsFragment : Fragment() {
 
         toolbar.children.forEach {
             if (it is ImageButton) {
-                it.scaleX = resources.getDimension(R.dimen.toolbar_icons_scale)
-                it.scaleY = resources.getDimension(R.dimen.toolbar_icons_scale)
+                val scale = resources.getString(R.string.toolbar_icons_scale).toFloat()
+                it.scaleX = scale
+                it.scaleY = scale
             }
         }
     }

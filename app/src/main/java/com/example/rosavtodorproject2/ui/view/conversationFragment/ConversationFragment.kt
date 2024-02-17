@@ -31,7 +31,12 @@ class ConversationFragment : Fragment() {
 
     private val viewModel: ConversationFragmentViewModel by viewModels { applicationComponent.getConversationViewModelFactory() }
 
-    private val adapter = MessagesListAdapter(MessagesDiffUtil(), viewModel.currentUser.value?.id ?: -1)
+    private var adapter:MessagesListAdapter? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        adapter = MessagesListAdapter(MessagesDiffUtil(), viewModel.currentUser.value?.id ?: -1)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,7 +98,7 @@ class ConversationFragment : Fragment() {
         viewModel.messages.observe(viewLifecycleOwner) { newMessages ->
             val messagesInThisConversation =
                 newMessages.filter { it.userRecieverId == collocutorId || it.userSenderId == collocutorId }
-            adapter.submitList(messagesInThisConversation)
+            adapter?.submitList(messagesInThisConversation)
             if (messagesInThisConversation.isNotEmpty()) {
                 messagesRecyclerView.smoothScrollToPosition(messagesInThisConversation.count() - 1)
             }
@@ -102,13 +107,13 @@ class ConversationFragment : Fragment() {
         messagesRecyclerView.addItemDecoration(
             MessageElementOffsetItemDecoration(
                 leftOffset = dpToPx(
-                    resources.getDimension(R.dimen.horizontal_message_offset).toInt()
+                    resources.getInteger(R.integer.horizontal_message_offset)
                 ),
                 bottomOffset = dpToPx(
-                    resources.getDimension(R.dimen.bottom_message_offset).toInt()
+                    resources.getInteger(R.integer.bottom_message_offset)
                 ),
                 rightOffset = dpToPx(
-                    resources.getDimension(R.dimen.horizontal_message_offset).toInt()
+                    resources.getInteger(R.integer.horizontal_message_offset)
                 ),
             )
         )

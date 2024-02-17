@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rosavtodorproject2.App
 import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.databinding.FragmentConversationBinding
-import com.example.rosavtodorproject2.ui.viewModels.ConversationFragmentViewModel
 import java.util.Calendar
 import java.util.TimeZone
 

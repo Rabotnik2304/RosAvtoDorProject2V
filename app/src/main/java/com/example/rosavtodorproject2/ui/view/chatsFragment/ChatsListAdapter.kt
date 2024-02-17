@@ -37,7 +37,7 @@ class ChatsListAdapter(
                 collocutorName = currentList[position].userName,
                 collocutorPictureResourceId = currentList[position].userPictureResourcesId,
             )
-            val r = it
+
 
             Navigation.findNavController(it).navigate(action)
         }

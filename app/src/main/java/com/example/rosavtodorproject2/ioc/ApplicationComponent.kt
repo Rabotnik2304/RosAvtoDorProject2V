@@ -5,8 +5,11 @@ import com.example.rosavtodorproject2.data.dataSource.MapDataSourceHardCode
 import com.example.rosavtodorproject2.data.repositories.MapPointsRepository
 import com.example.rosavtodorproject2.data.repositories.MessagesRepository
 import com.example.rosavtodorproject2.data.repositories.UserRepository
+import com.example.rosavtodorproject2.domain.useCases.MapPointsUseCase
 import com.example.rosavtodorproject2.domain.useCases.MessageWithUserSenderUseCase
+import com.example.rosavtodorproject2.domain.useCases.MessagesUseCase
 import com.example.rosavtodorproject2.domain.useCases.UserWithLastMessageUseCase
+import com.example.rosavtodorproject2.domain.useCases.UsersUseCase
 import dagger.Provides
 import javax.inject.Scope
 
@@ -39,10 +42,10 @@ object ChatsViewModelModule {
     @Provides
     @AppComponentScope
     fun getChatsViewModelFactory(
-        userRepository: UserRepository,
+        usersUseCase: UsersUseCase,
         userWithLastMessageUseCase: UserWithLastMessageUseCase
     ): ChatsViewModelFactory {
-        return ChatsViewModelFactory(userRepository,userWithLastMessageUseCase)
+        return ChatsViewModelFactory(usersUseCase,userWithLastMessageUseCase)
     }
 }
 
@@ -51,11 +54,11 @@ object ConversationViewModelModule {
     @Provides
     @AppComponentScope
     fun getConversationViewModelFactory(
-        messagesRepository: MessagesRepository,
-        userRepository: UserRepository,
+        messagesUseCase: MessagesUseCase,
+        usersUseCase: UsersUseCase,
         messageWithUserSenderUseCase: MessageWithUserSenderUseCase
     ): ConversationViewModelFactory {
-        return ConversationViewModelFactory(messagesRepository, userRepository,messageWithUserSenderUseCase)
+        return ConversationViewModelFactory(messagesUseCase, usersUseCase,messageWithUserSenderUseCase)
     }
 }
 @dagger.Module
@@ -63,8 +66,8 @@ object InteractiveMapViewModelModule {
     @Provides
     @AppComponentScope
     fun getInteractiveMapViewModelFactory(
-        pointsRepository: MapPointsRepository,
+        mapPointsUseCase: MapPointsUseCase,
     ): InteractiveMapViewModelFactory {
-        return InteractiveMapViewModelFactory(pointsRepository)
+        return InteractiveMapViewModelFactory(mapPointsUseCase)
     }
 }

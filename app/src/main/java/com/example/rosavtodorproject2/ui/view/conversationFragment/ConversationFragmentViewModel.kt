@@ -1,23 +1,24 @@
-package com.example.rosavtodorproject2.ui.viewModels
+package com.example.rosavtodorproject2.ui.view.conversationFragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.example.rosavtodorproject2.data.models.User
-import com.example.rosavtodorproject2.data.repositories.MessagesRepository
 import com.example.rosavtodorproject2.data.repositories.UserRepository
 import com.example.rosavtodorproject2.domain.model.MessageWithUserSender
+import com.example.rosavtodorproject2.domain.useCases.MessagesUseCase
 import com.example.rosavtodorproject2.domain.useCases.MessageWithUserSenderUseCase
+import com.example.rosavtodorproject2.domain.useCases.UsersUseCase
 import com.example.rosavtodorproject2.ui.model.MessageElementModel
 import java.util.Date
 import javax.inject.Inject
 
 class ConversationFragmentViewModel @Inject constructor(
-    val messagesRepository: MessagesRepository,
-    val userRepository:UserRepository,
+    val messagesUseCase: MessagesUseCase,
+    val usersUseCase: UsersUseCase,
     val messageWithUserSenderUseCase: MessageWithUserSenderUseCase,
 ) : ViewModel() {
-    val currentUser: LiveData<User> = userRepository.currentUser
+    val currentUser: LiveData<User> = usersUseCase.currentUser
     val messages: LiveData<List<MessageElementModel>> =
         messageWithUserSenderUseCase.messageWithUserSender.map {
             it.map { messageWithUserSender -> messageWithUserSender.transformToItemModel() }
@@ -33,8 +34,8 @@ class ConversationFragmentViewModel @Inject constructor(
     }
 
     fun sendMessage(userRecieverId:Int, text :String, sendDate: Date) {
-        messagesRepository.addMessage(
-            userSenderId = currentUser.value!!.id,
+        messagesUseCase.addMessage(
+            userSenderId = currentUser.value?.id ?: -1,
             userRecieverId = userRecieverId,
             text = text,
             sendDate = sendDate

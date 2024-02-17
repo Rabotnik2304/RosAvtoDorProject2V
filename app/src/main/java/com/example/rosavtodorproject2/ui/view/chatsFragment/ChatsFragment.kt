@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rosavtodorproject2.App
 import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.databinding.FragmentChatsBinding
-import com.example.rosavtodorproject2.ui.viewModels.ChatsFragmentViewModel
 
 class ChatsFragment : Fragment() {
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.rosavtodorproject2.data.repositories.UserRepository
 import com.example.rosavtodorproject2.domain.useCases.UserWithLastMessageUseCase
-import com.example.rosavtodorproject2.ui.stateHolders.ChatsFragmentViewModel
+import com.example.rosavtodorproject2.ui.viewModels.ChatsFragmentViewModel
 import javax.inject.Inject
 
 class ChatsViewModelFactory @Inject constructor(

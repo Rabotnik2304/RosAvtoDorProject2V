@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.rosavtodorproject2.data.repositories.MessagesRepository
 import com.example.rosavtodorproject2.data.repositories.UserRepository
 import com.example.rosavtodorproject2.domain.useCases.MessageWithUserSenderUseCase
-import com.example.rosavtodorproject2.ui.stateHolders.ConversationFragmentViewModel
+import com.example.rosavtodorproject2.ui.viewModels.ConversationFragmentViewModel
 import javax.inject.Inject
 
 class ConversationViewModelFactory @Inject constructor(

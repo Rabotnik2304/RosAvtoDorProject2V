@@ -1,4 +1,4 @@
-package com.example.rosavtodorproject2.ui.view.ConversationWindow
+package com.example.rosavtodorproject2.ui.view.conversationFragment
 
 import android.graphics.Rect
 import android.view.View

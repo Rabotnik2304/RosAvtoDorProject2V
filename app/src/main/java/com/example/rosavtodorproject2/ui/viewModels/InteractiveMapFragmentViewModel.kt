@@ -1,4 +1,4 @@
-package com.example.rosavtodorproject2.ui.stateHolders
+package com.example.rosavtodorproject2.ui.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

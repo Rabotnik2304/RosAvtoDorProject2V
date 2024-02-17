@@ -23,7 +23,7 @@ class App : Application() {
     companion object {
         private var sInstance: App? = null
         fun getInstance(): App {
-            return sInstance!!
+            return requireNotNull(sInstance) { "I really don't how you get there." }
         }
     }
 }

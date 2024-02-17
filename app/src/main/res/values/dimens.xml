@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="horizontal_message_offset" type="dimen">16dp</item>
+    <item name="bottom_message_offset" type="dimen">15dp</item>
+    <item name="toolbar_icons_scale" type="dimen">1.5</item>
+</resources>

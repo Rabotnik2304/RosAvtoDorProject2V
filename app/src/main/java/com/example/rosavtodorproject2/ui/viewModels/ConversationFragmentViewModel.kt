@@ -1,4 +1,4 @@
-package com.example.rosavtodorproject2.ui.stateHolders
+package com.example.rosavtodorproject2.ui.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -9,9 +9,7 @@ import com.example.rosavtodorproject2.data.repositories.UserRepository
 import com.example.rosavtodorproject2.domain.model.MessageWithUserSender
 import com.example.rosavtodorproject2.domain.useCases.MessageWithUserSenderUseCase
 import com.example.rosavtodorproject2.ui.model.MessageElementModel
-import java.util.Calendar
 import java.util.Date
-import java.util.TimeZone
 import javax.inject.Inject
 
 class ConversationFragmentViewModel @Inject constructor(

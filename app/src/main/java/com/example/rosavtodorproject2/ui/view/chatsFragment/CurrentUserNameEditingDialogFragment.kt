@@ -1,4 +1,4 @@
-package com.example.rosavtodorproject2.ui.view.ChatsWindow
+package com.example.rosavtodorproject2.ui.view.chatsFragment
 
 import android.app.AlertDialog
 import android.app.Dialog

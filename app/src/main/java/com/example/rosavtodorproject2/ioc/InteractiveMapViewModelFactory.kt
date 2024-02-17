@@ -3,7 +3,7 @@ package com.example.rosavtodorproject2.ioc
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.rosavtodorproject2.data.repositories.MapPointsRepository
-import com.example.rosavtodorproject2.ui.stateHolders.InteractiveMapFragmentViewModel
+import com.example.rosavtodorproject2.ui.viewModels.InteractiveMapFragmentViewModel
 import javax.inject.Inject
 
 class InteractiveMapViewModelFactory @Inject constructor(

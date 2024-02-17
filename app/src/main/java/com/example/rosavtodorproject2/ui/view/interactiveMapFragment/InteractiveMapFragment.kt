@@ -1,24 +1,19 @@
-package com.example.rosavtodorproject2.ui.view.InteractiveMapWindow
+package com.example.rosavtodorproject2.ui.view.interactiveMapFragment
 
 import android.os.Bundle
-import android.view.ContextThemeWrapper
-import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.rosavtodorproject2.App
 import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.data.models.MyPoint
 import com.example.rosavtodorproject2.databinding.FragmentInteractiveMapBinding
-import com.example.rosavtodorproject2.ui.stateHolders.InteractiveMapFragmentViewModel
+import com.example.rosavtodorproject2.ui.viewModels.InteractiveMapFragmentViewModel
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
@@ -34,12 +29,7 @@ class InteractiveMapFragment : Fragment() {
 
     private lateinit var mapView: MapView
 
-    private lateinit var viewModel: InteractiveMapFragmentViewModel
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, applicationComponent.getInteractiveMapViewModelFactory())
-            .get(InteractiveMapFragmentViewModel::class.java)
-    }
+    private val viewModel: InteractiveMapFragmentViewModel by viewModels { applicationComponent.getInteractiveMapViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

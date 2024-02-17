@@ -1,9 +1,9 @@
-package com.example.rosavtodorproject2.ui.view.ConversationWindow
+package com.example.rosavtodorproject2.ui.view.conversationFragment
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.rosavtodorproject2.ui.model.MessageElementModel
 
-class MessagesDiffCalculator : DiffUtil.ItemCallback<MessageElementModel>() {
+class MessagesDiffUtil : DiffUtil.ItemCallback<MessageElementModel>() {
     override fun areItemsTheSame(
         oldItem: MessageElementModel,
         newItem: MessageElementModel

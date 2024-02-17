@@ -1,4 +1,4 @@
-package com.example.rosavtodorproject2.ui.view.ChatsWindow
+package com.example.rosavtodorproject2.ui.view.chatsFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,15 +10,18 @@ import android.widget.TextView
 import androidx.core.view.children
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rosavtodorproject2.App
 import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.databinding.FragmentChatsBinding
-import com.example.rosavtodorproject2.ui.stateHolders.ChatsFragmentViewModel
+import com.example.rosavtodorproject2.ui.viewModels.ChatsFragmentViewModel
 
 class ChatsFragment : Fragment() {
 
@@ -26,18 +29,9 @@ class ChatsFragment : Fragment() {
     private val applicationComponent
         get() = App.getInstance().applicationComponent
 
-    private lateinit var adapter: ChatsListViewAdapter
-    private var chatsViewController: ChatsViewController? = null
+    private var adapter: ChatsListAdapter = ChatsListAdapter(ChatsDiffUtil())
 
-    private lateinit var viewModel: ChatsFragmentViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        adapter = ChatsListViewAdapter(ChatsDiffCalculator())
-
-        viewModel = ViewModelProvider(this, applicationComponent.getChatsViewModelFactory())
-            .get(ChatsFragmentViewModel::class.java)
-    }
+    private val viewModel: ChatsFragmentViewModel by viewModels { applicationComponent.getChatsViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,32 +41,21 @@ class ChatsFragment : Fragment() {
 
         binding = FragmentChatsBinding.inflate(layoutInflater, container, false)
 
-        chatsViewController = ChatsViewController(
-            activity = requireActivity(),
-            rootView = binding.root,
-            adapter = adapter,
-            lifecycleOwner = viewLifecycleOwner,
-            viewModel = viewModel,
-        ).apply {
-            setUpViews()
-        }
-
         setUpToolBar()
+        setUpChatsList()
 
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.goToInteractiveMapPanel.root.setOnClickListener {
             findNavController().navigate(R.id.action_chatsFragment_to_interactiveMapFragment)
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        chatsViewController = null
-    }
 
     fun setUpToolBar() {
 
@@ -114,9 +97,34 @@ class ChatsFragment : Fragment() {
 
         toolbar.children.forEach {
             if (it is ImageButton) {
-                it.scaleX = 1.5f
-                it.scaleY = 1.5f
+                it.scaleX = resources.getDimension(R.dimen.toolbar_icons_scale)
+                it.scaleY = resources.getDimension(R.dimen.toolbar_icons_scale)
             }
         }
+    }
+    fun setUpChatsList() {
+
+        val chatsRecyclerView: RecyclerView = binding.chats
+
+        chatsRecyclerView.adapter = adapter
+
+        val layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+
+        chatsRecyclerView.layoutManager = layoutManager
+
+        viewModel.chats.observe(viewLifecycleOwner) { newUsersOrMessages ->
+            adapter.submitList(newUsersOrMessages)
+        }
+
+        chatsRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                layoutManager.orientation
+            )
+        )
     }
 }

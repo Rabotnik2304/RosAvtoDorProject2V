@@ -11,6 +11,7 @@ import androidx.core.view.children
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -28,7 +29,10 @@ class ChatsFragment : Fragment() {
     private val applicationComponent
         get() = App.getInstance().applicationComponent
 
-    private var adapter: ChatsListAdapter = ChatsListAdapter(ChatsDiffUtil())
+    private var adapter: ChatsListAdapter = ChatsListAdapter(
+        chatsDiffUtil = ChatsDiffUtil(),
+        onItemClick = ::onRecyclerItemClick,
+    )
 
     private val viewModel: ChatsFragmentViewModel by viewModels { applicationComponent.getChatsViewModelFactory() }
 
@@ -125,5 +129,15 @@ class ChatsFragment : Fragment() {
                 layoutManager.orientation
             )
         )
+    }
+    fun onRecyclerItemClick(recyclerItemView:View, collocutorId:Int,collocutorName:String,collocutorPictureResourceId:Int){
+
+        val action = ChatsFragmentDirections.actionChatsFragmentToConversationFragment(
+            collocutorId = collocutorId,
+            collocutorName = collocutorName,
+            collocutorPictureResourceId = collocutorPictureResourceId,
+        )
+
+        Navigation.findNavController(recyclerItemView).navigate(action)
     }
 }

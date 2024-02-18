@@ -25,7 +25,7 @@ import com.example.rosavtodorproject2.databinding.FragmentChatsBinding
 
 class ChatsFragment : Fragment() {
 
-    lateinit var binding: FragmentChatsBinding
+    private lateinit var binding: FragmentChatsBinding
     private val applicationComponent
         get() = App.getInstance().applicationComponent
 

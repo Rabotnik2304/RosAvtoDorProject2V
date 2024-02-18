@@ -23,7 +23,7 @@ import java.util.TimeZone
 class ConversationFragment : Fragment() {
     var collocutorId = 0
 
-    lateinit var binding: FragmentConversationBinding
+    private lateinit var binding: FragmentConversationBinding
 
     private val applicationComponent
         get() = App.getInstance().applicationComponent

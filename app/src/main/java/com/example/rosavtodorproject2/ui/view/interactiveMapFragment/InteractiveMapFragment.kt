@@ -23,7 +23,7 @@ import java.lang.Exception
 
 
 class InteractiveMapFragment : Fragment() {
-    lateinit var binding: FragmentInteractiveMapBinding
+    private lateinit var binding: FragmentInteractiveMapBinding
     private val applicationComponent
         get() = App.getInstance().applicationComponent
 

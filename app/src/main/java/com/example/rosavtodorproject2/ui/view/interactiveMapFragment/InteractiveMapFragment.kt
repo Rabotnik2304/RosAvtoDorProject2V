@@ -1,6 +1,7 @@
 package com.example.rosavtodorproject2.ui.view.interactiveMapFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.runtime.Runtime.getApplicationContext
 import com.yandex.runtime.image.ImageProvider
+import java.lang.Exception
 
 
 class InteractiveMapFragment : Fragment() {
@@ -60,9 +62,20 @@ class InteractiveMapFragment : Fragment() {
             findNavController().navigate(R.id.action_interactiveMapFragment_to_chatsFragment)
         }
         binding.addPointToMapFab.setOnClickListener {
-            val popup = PopupMenu(requireContext(), it)
-            popup.inflate(R.menu.add_point_menu)
-            popup.show()
+            val popupMenu = PopupMenu(requireContext(), it)
+            popupMenu.inflate(R.menu.add_point_menu)
+            try{
+                val fieldMPopup = PopupMenu::class.java.getDeclaredField("mPopup")
+                fieldMPopup.isAccessible = true
+                val mPopup = fieldMPopup.get(popupMenu)
+                mPopup.javaClass
+                    .getDeclaredMethod("setForceShowIcon",Boolean::class.java)
+                    .invoke(mPopup,true)
+            } catch (e:Exception){
+                Log.e("Main","Error showing menu icons",e)
+            } finally {
+                popupMenu.show()
+            }
         }
     }
 

@@ -64,15 +64,15 @@ class InteractiveMapFragment : Fragment() {
         binding.addPointToMapFab.setOnClickListener {
             val popupMenu = PopupMenu(requireContext(), it)
             popupMenu.inflate(R.menu.add_point_menu)
-            try{
+            try {
                 val fieldMPopup = PopupMenu::class.java.getDeclaredField("mPopup")
                 fieldMPopup.isAccessible = true
                 val mPopup = fieldMPopup.get(popupMenu)
                 mPopup.javaClass
-                    .getDeclaredMethod("setForceShowIcon",Boolean::class.java)
-                    .invoke(mPopup,true)
-            } catch (e:Exception){
-                Log.e("Main","Error showing menu icons",e)
+                    .getDeclaredMethod("setForceShowIcon", Boolean::class.java)
+                    .invoke(mPopup, true)
+            } catch (e: Exception) {
+                Log.e("Main", "Error showing menu icons", e)
             } finally {
                 popupMenu.show()
             }
@@ -80,7 +80,8 @@ class InteractiveMapFragment : Fragment() {
     }
 
     fun addPointsToInteractiveMap(myPoints: List<MyPoint>) {
-        val imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.petrol_station_icon)
+        val imageProvider =
+            ImageProvider.fromResource(requireContext(), R.drawable.petrol_station_icon)
         myPoints.forEach {
             mapView.map.mapObjects.addPlacemark()
                 .apply {

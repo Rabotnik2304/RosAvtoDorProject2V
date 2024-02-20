@@ -57,31 +57,7 @@ class InteractiveMapFragment : Fragment() {
             )
         )
 
-        mapView.map.addInputListener(object : InputListener {
-            override fun onMapTap(map: Map, point: Point) {
-                if (!isPointAdding) {
-                    return
-                }
-
-                val imageProvider =
-                    ImageProvider.fromResource(requireContext(), iconsResources[currentIconNumber])
-
-                if (currentIconPlacemark == null) {
-                    currentIconPlacemark = mapView.map.mapObjects.addPlacemark()
-                        .apply {
-                            geometry = Point(point.latitude, point.longitude)
-                            setIcon(imageProvider)
-                        }
-                } else {
-                    currentIconPlacemark?.geometry = Point(point.latitude, point.longitude)
-                }
-
-            }
-
-            override fun onMapLongTap(p0: Map, p1: Point) {
-                // Обработка долгого нажатия, если нужно
-            }
-        })
+        mapView.map.addInputListener(addingPointListener)
 
 
         viewModel.points.observe(viewLifecycleOwner) {
@@ -91,6 +67,31 @@ class InteractiveMapFragment : Fragment() {
         return binding.root
     }
 
+    private val addingPointListener = object : InputListener {
+        override fun onMapTap(map: Map, point: Point) {
+            if (!isPointAdding) {
+                return
+            }
+
+            val imageProvider =
+                ImageProvider.fromResource(requireContext(), iconsResources[currentIconNumber])
+
+            if (currentIconPlacemark == null) {
+                currentIconPlacemark = mapView.map.mapObjects.addPlacemark()
+                    .apply {
+                        geometry = Point(point.latitude, point.longitude)
+                        setIcon(imageProvider)
+                    }
+            } else {
+                currentIconPlacemark?.geometry = Point(point.latitude, point.longitude)
+            }
+
+        }
+
+        override fun onMapLongTap(p0: Map, p1: Point) {
+            // Обработка долгого нажатия, если нужно
+        }
+    }
     private fun addVerifiedPointsToInteractiveMap(myPoints: List<MyPoint>) {
         val imageProvider =
             ImageProvider.fromResource(requireContext(), R.drawable.petrol_station_icon)

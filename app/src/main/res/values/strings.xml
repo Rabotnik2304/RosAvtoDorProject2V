@@ -4,8 +4,8 @@
     <string name="back_to_chats_fragment_text">Вернуться к панели чатов</string>
     <string name="ros_avto_dor_bot_mame">Бот помощник рос авто дора</string>
     <string name="change_current_user_name_option">Изменить имя</string>
-    <string name="dialog_window_sentence">Чтобы изменить своё имя, просто введите новое в поле под старым</string>
-    <string name="add_point_to_interactive_map">Чтобы изменить своё имя, просто введите новое в поле под старым</string>
+    <string name="dialog_window_sentence">Чтобы изменить своё имя, просто введите новое в поле под старым.</string>
+    <string name="add_point_to_interactive_map">Чтобы добавить точку на карту, нажмите на эту кнопку.</string>
     <string name="road_accident_menu_item_title">ДТП</string>
     <string name="pothole_menu_item_title">Яма</string>
     <string name="obstruction_menu_item_title">Преграда</string>

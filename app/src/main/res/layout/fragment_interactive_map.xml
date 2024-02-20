@@ -27,7 +27,6 @@
         />
 
     <TextView
-        android:id="@+id/collocutor_name"
         android:layout_width="wrap_content"
         android:layout_height ="wrap_content"
         android:gravity="start"
@@ -52,12 +51,45 @@
         android:id="@+id/add_point_to_map_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="22dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="22dp"
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/add_point_to_interactive_map"
         android:src="@drawable/add_point_to_map_button_icon"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="48dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/confirm_addition_point_to_map_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:layout_marginEnd="80dp"
+        android:src="@drawable/confirm_addition_point_to_map_button_icon"
         android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:borderWidth="0dp"
-        android:contentDescription="@string/add_point_to_interactive_map" />
+        android:contentDescription="@string/add_point_to_interactive_map"
+        app:maxImageSize="48dp"
+        android:visibility="invisible"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/cancel_addition_point_to_map_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/cancel_addition_point_to_map_button_icon"
+        android:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:borderWidth="0dp"
+        android:contentDescription="@string/add_point_to_interactive_map"
+        app:maxImageSize="48dp"
+        android:visibility="invisible"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,4 +17,9 @@ class MapPointsRepository @Inject constructor(
     fun updatePoints() {
         _points.value = dataSource.loadPoints()
     }
+
+    fun addPoint(point: MyPoint) {
+        dataSource.loadPoints().add(point)
+        updatePoints()
+    }
 }

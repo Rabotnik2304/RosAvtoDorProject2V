@@ -37,8 +37,18 @@ class InteractiveMapFragment : Fragment() {
 
     private var isPointAdding = false
     private var currentIconNumber: Int = -1
-    private val iconsResources= listOf( R.drawable.image_car_accident_24dp, R.drawable.image_car_accident_24dp, R.drawable.image_car_accident_24dp, R.drawable.image_car_accident_24dp)
+    private val iconsResources = listOf(
+        R.drawable.image_car_accident_24dp,
+        R.drawable.image_car_accident_24dp,
+        R.drawable.image_car_accident_24dp,
+        R.drawable.image_car_accident_24dp,
+        R.drawable.petrol_station_icon,
+        R.drawable.petrol_station_icon,
+        R.drawable.petrol_station_icon,
+        R.drawable.petrol_station_icon,
+    )
     private var currentIconPlacemark: com.yandex.mapkit.map.PlacemarkMapObject? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,9 +79,12 @@ class InteractiveMapFragment : Fragment() {
 
     private val addingPointListener = object : InputListener {
         override fun onMapTap(map: Map, point: Point) {
+
             if (!isPointAdding) {
                 return
             }
+
+            binding.confirmAdditionPointToMapFab.isEnabled = true
 
             val imageProvider =
                 ImageProvider.fromResource(requireContext(), iconsResources[currentIconNumber])
@@ -82,6 +95,7 @@ class InteractiveMapFragment : Fragment() {
                         geometry = Point(point.latitude, point.longitude)
                         setIcon(imageProvider)
                     }
+
             } else {
                 currentIconPlacemark?.geometry = Point(point.latitude, point.longitude)
             }
@@ -90,12 +104,16 @@ class InteractiveMapFragment : Fragment() {
 
         override fun onMapLongTap(p0: Map, p1: Point) {
             // Обработка долгого нажатия, если нужно
+            // Пока не нужно, но может потом что-нибудь покумекаем
         }
     }
+
     private fun addVerifiedPointsToInteractiveMap(myPoints: List<MyPoint>) {
-        val imageProvider =
-            ImageProvider.fromResource(requireContext(), R.drawable.petrol_station_icon)
+
+        mapView.map.mapObjects.clear()
         myPoints.forEach {
+            val imageProvider =
+                ImageProvider.fromResource(requireContext(), iconsResources[it.type])
             mapView.map.mapObjects.addPlacemark()
                 .apply {
                     geometry = Point(it.latitude, it.longitude)
@@ -159,10 +177,11 @@ class InteractiveMapFragment : Fragment() {
         isPointAdding = false
         currentIconNumber = -1
 
-        if (currentIconPlacemark!=null) {
+        if (currentIconPlacemark != null) {
             mapView.map.mapObjects.remove(currentIconPlacemark!!)
             currentIconPlacemark = null
         }
+        binding.confirmAdditionPointToMapFab.isEnabled = false
         return true
     }
 
@@ -171,9 +190,17 @@ class InteractiveMapFragment : Fragment() {
         binding.cancelAdditionPointToMapFab.visibility = View.INVISIBLE
         binding.confirmAdditionPointToMapFab.visibility = View.INVISIBLE
         isPointAdding = false
-        currentIconNumber = -1
 
+        viewModel.addPoint(
+            type = currentIconNumber,
+            latitude = currentIconPlacemark?.geometry!!.latitude,
+            longitude = currentIconPlacemark?.geometry!!.longitude,
+            text = "Зачем я существую?"
+        )
+
+        currentIconNumber = -1
         currentIconPlacemark = null
+        binding.confirmAdditionPointToMapFab.isEnabled = false
 
         return true
     }

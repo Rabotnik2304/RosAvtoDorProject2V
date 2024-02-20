@@ -72,6 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:borderWidth="0dp"
+        android:enabled="false"
         android:contentDescription="@string/add_point_to_interactive_map"
         app:maxImageSize="48dp"
         android:visibility="invisible"

@@ -1,6 +1,11 @@
 package com.example.rosavtodorproject2.ui.view.interactiveMapFragment
 
-import android.graphics.drawable.Drawable
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -73,6 +80,80 @@ class InteractiveMapFragment : Fragment() {
         viewModel.points.observe(viewLifecycleOwner) {
             addVerifiedPointsToInteractiveMap(it)
         }
+
+        /*
+           Всё что находится ниже, до конца метода, это просто эксперимент по получению местоположения
+           После получения разрешения, он не сразу, а только после повторного захода во фрагмент
+           начинает получать текущее местоположение
+           Причём получает он его прямо таки постоянно, без остановок.
+           (Возможно стоит делать запросы в Бек, только если расстояние от прошлого отличается на 2 км.)
+           Мне кажется стоит ПОКА оставить это дело, до обновления бека, т.к. пока, без знаний того,
+           как будет организован бек, я не могу сказать, как мне надо здесь всё поменять, чтобы
+           работало нормально + выглядело не так топорно что-ли.
+
+
+
+        val locationManager:LocationManager? = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+
+        val locationListener = object : LocationListener {
+            override fun onLocationChanged(location: Location) {
+                // Местоположение пользователя изменилось
+                val latitude: Double = location.getLatitude()
+                val longitude: Double = location.getLongitude()
+                // Делаем что-то с полученными координатами
+                Toast.makeText(
+                    requireContext(),
+                    "Широта: $latitude, Долгота: $longitude",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        // Проверяем разрешение на использование местоположения
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            &&
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Если разрешение не предоставлено, запрашиваем его
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION),
+                1
+            )
+
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+                &&
+                ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                locationManager?.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    0,
+                    0f,
+                    locationListener
+                )
+            }
+        } else {
+            // Если разрешение предоставлено, запрашиваем обновления местоположения
+            locationManager?.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                0,
+                0f,
+                locationListener
+            )
+        }
+        */
 
         return binding.root
     }

@@ -1,21 +1,17 @@
 package com.example.rosavtodorproject2.ui.view.interactiveMapFragment
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListPopupWindow
 import android.widget.PopupMenu
+import android.widget.Spinner
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -154,6 +150,7 @@ class InteractiveMapFragment : Fragment() {
             )
         }
         */
+        setUpRoadsSpinnerList()
 
         return binding.root
     }
@@ -219,6 +216,34 @@ class InteractiveMapFragment : Fragment() {
         }
     }
 
+    val roads: ArrayList<String> =
+        arrayListOf<String>("Р-152", "Р-153", "Р-1545", "Р-145", "Р-155", "Р-545")
+
+    private fun setUpRoadsSpinnerList() {
+        // Создаем адаптер ArrayAdapter с помощью массива строк и стандартной разметки элемета spinner
+        val adapter =
+            ArrayAdapter(requireContext(), R.layout.spinner_list_element, R.id.road_name, roads)
+
+        binding.choseCurrentRoadSpinner.adapter = adapter
+        val itemSelectedListener: AdapterView.OnItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+
+                    // Получаем выбранный объект
+                    val item = parent.getItemAtPosition(position) as String
+                    Toast.makeText(requireContext(), item, Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        binding.choseCurrentRoadSpinner.onItemSelectedListener = itemSelectedListener
+    }
+
     private fun listenerForAddPointToMapFab(fabView: View) {
         val popupMenu = PopupMenu(requireContext(), fabView)
         popupMenu.inflate(R.menu.add_point_menu)
@@ -246,6 +271,7 @@ class InteractiveMapFragment : Fragment() {
         binding.cancelAdditionPointToMapFab.visibility = View.VISIBLE
         binding.confirmAdditionPointToMapFab.visibility = View.VISIBLE
 
+        binding.choseCurrentRoadSpinner.isEnabled = false
         currentIconNumber = menuItem.order
         isPointAdding = true
         return true
@@ -263,6 +289,8 @@ class InteractiveMapFragment : Fragment() {
             currentIconPlacemark = null
         }
         binding.confirmAdditionPointToMapFab.isEnabled = false
+        binding.choseCurrentRoadSpinner.isEnabled = true
+
         return true
     }
 
@@ -282,6 +310,7 @@ class InteractiveMapFragment : Fragment() {
         currentIconNumber = -1
         currentIconPlacemark = null
         binding.confirmAdditionPointToMapFab.isEnabled = false
+        binding.choseCurrentRoadSpinner.isEnabled = true
 
         return true
     }

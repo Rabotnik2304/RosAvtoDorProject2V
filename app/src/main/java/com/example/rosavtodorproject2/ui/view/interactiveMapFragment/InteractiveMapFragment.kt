@@ -233,7 +233,7 @@ class InteractiveMapFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-
+                    val a = 0
                     // Получаем выбранный объект
                     val item = parent.getItemAtPosition(position) as String
                     Toast.makeText(requireContext(), item, Toast.LENGTH_SHORT).show()

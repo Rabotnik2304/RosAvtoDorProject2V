@@ -46,7 +46,13 @@
         app:layout_constraintTop_toBottomOf="@+id/back_to_chats_panel"
         app:layout_constraintBottom_toBottomOf="parent"
         />
-
+    <View
+        android:id="@+id/anchor_view_for_popup_menu"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        app:layout_constraintBottom_toTopOf="@id/add_point_to_map_fab"
+        app:layout_constraintEnd_toEndOf="@id/add_point_to_map_fab"
+        />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_point_to_map_fab"
         android:layout_width="wrap_content"
@@ -96,7 +102,6 @@
         android:id="@+id/chose_current_road_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="2dp"
         android:layout_marginBottom="15dp"
         android:layout_marginEnd="10dp"
         android:textSize="14sp"

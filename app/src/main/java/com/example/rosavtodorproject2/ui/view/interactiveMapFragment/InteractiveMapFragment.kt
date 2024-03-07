@@ -1,16 +1,17 @@
 package com.example.rosavtodorproject2.ui.view.interactiveMapFragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextThemeWrapper
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ListPopupWindow
 import android.widget.PopupMenu
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -206,7 +207,7 @@ class InteractiveMapFragment : Fragment() {
             findNavController().navigate(R.id.action_interactiveMapFragment_to_chatsFragment)
         }
         binding.addPointToMapFab.setOnClickListener {
-            listenerForAddPointToMapFab(it)
+            listenerForAddPointToMapFab(binding.anchorViewForPopupMenu)
         }
         binding.confirmAdditionPointToMapFab.setOnClickListener {
             listenerForConfirmAdditionPointFab(it)
@@ -217,7 +218,7 @@ class InteractiveMapFragment : Fragment() {
     }
 
     val roads: ArrayList<String> =
-        arrayListOf<String>("Р-152", "Р-153", "Р-1545", "Р-145", "Р-155", "Р-545")
+        arrayListOf<String>("Р-152", "Р-545")
 
     private fun setUpRoadsSpinnerList() {
         // Создаем адаптер ArrayAdapter с помощью массива строк и стандартной разметки элемета spinner
@@ -244,10 +245,11 @@ class InteractiveMapFragment : Fragment() {
         binding.choseCurrentRoadSpinner.onItemSelectedListener = itemSelectedListener
     }
 
-    private fun listenerForAddPointToMapFab(fabView: View) {
-        val popupMenu = PopupMenu(requireContext(), fabView)
-        popupMenu.inflate(R.menu.add_point_menu)
+    private fun listenerForAddPointToMapFab(anchorView: View) {
+        val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.MyPopupMenuStyle)
+        val popupMenu = PopupMenu(wrapper, anchorView, Gravity.END)
 
+        popupMenu.inflate(R.menu.add_point_menu)
         popupMenu.setOnMenuItemClickListener {
             listenerForMenuItemClick(it)
         }

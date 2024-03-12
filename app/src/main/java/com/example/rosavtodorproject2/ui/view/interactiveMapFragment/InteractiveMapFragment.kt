@@ -50,6 +50,7 @@ class InteractiveMapFragment : Fragment() {
         R.drawable.petrol_station_icon,
         R.drawable.petrol_station_icon,
         R.drawable.petrol_station_icon,
+        R.drawable.petrol_station_icon,
     )
     private var currentIconPlacemark: com.yandex.mapkit.map.PlacemarkMapObject? = null
 
@@ -151,7 +152,6 @@ class InteractiveMapFragment : Fragment() {
             )
         }
         */
-        setUpRoadsSpinnerList()
 
         return binding.root
     }
@@ -217,34 +217,6 @@ class InteractiveMapFragment : Fragment() {
         }
     }
 
-    val roads: ArrayList<String> =
-        arrayListOf<String>("Р-152", "Р-545")
-
-    private fun setUpRoadsSpinnerList() {
-        // Создаем адаптер ArrayAdapter с помощью массива строк и стандартной разметки элемета spinner
-        val adapter =
-            ArrayAdapter(requireContext(), R.layout.spinner_list_element, R.id.road_name, roads)
-
-        binding.choseCurrentRoadSpinner.adapter = adapter
-        val itemSelectedListener: AdapterView.OnItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) {
-                    val a = 0
-                    // Получаем выбранный объект
-                    val item = parent.getItemAtPosition(position) as String
-                    Toast.makeText(requireContext(), item, Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-            }
-        binding.choseCurrentRoadSpinner.onItemSelectedListener = itemSelectedListener
-    }
-
     private fun listenerForAddPointToMapFab(anchorView: View) {
         val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.MyPopupMenuStyle)
         val popupMenu = PopupMenu(wrapper, anchorView, Gravity.END)
@@ -273,7 +245,6 @@ class InteractiveMapFragment : Fragment() {
         binding.cancelAdditionPointToMapFab.visibility = View.VISIBLE
         binding.confirmAdditionPointToMapFab.visibility = View.VISIBLE
 
-        binding.choseCurrentRoadSpinner.isEnabled = false
         currentIconNumber = menuItem.order
         isPointAdding = true
         return true
@@ -291,7 +262,6 @@ class InteractiveMapFragment : Fragment() {
             currentIconPlacemark = null
         }
         binding.confirmAdditionPointToMapFab.isEnabled = false
-        binding.choseCurrentRoadSpinner.isEnabled = true
 
         return true
     }
@@ -312,7 +282,6 @@ class InteractiveMapFragment : Fragment() {
         currentIconNumber = -1
         currentIconPlacemark = null
         binding.confirmAdditionPointToMapFab.isEnabled = false
-        binding.choseCurrentRoadSpinner.isEnabled = true
 
         return true
     }

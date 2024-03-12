@@ -2,10 +2,10 @@ package com.example.rosavtodorproject2.ui.view.interactiveMapFragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.rosavtodorproject2.data.models.MyPoint
-import com.example.rosavtodorproject2.data.repositories.MapPointsRepository
 import com.example.rosavtodorproject2.domain.useCases.MapPointsUseCase
-import com.yandex.mapkit.geometry.Point
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class InteractiveMapFragmentViewModel @Inject constructor(
@@ -19,7 +19,9 @@ class InteractiveMapFragmentViewModel @Inject constructor(
 
     //Я оставляю здесь отдельный метод, чтобы в будущем добавить SwipeToRefresh, к точкам на карте
     fun updatePoints() {
-        mapPointsUseCase.updatePoints()
+        viewModelScope.launch {
+            mapPointsUseCase.updatePoints()
+        }
     }
 
     fun addPoint(type: Int, latitude: Double, longitude: Double, text: String) {
@@ -28,7 +30,7 @@ class InteractiveMapFragmentViewModel @Inject constructor(
                 type = type,
                 latitude = latitude,
                 longitude = longitude,
-                text = text,
+                name = text,
             )
         )
     }

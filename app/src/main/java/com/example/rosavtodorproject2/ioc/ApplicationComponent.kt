@@ -1,10 +1,7 @@
 package com.example.rosavtodorproject2.ioc
 
 import com.example.rosavtodorproject2.data.dataSource.ChatsDataSourceHardCode
-import com.example.rosavtodorproject2.data.dataSource.MapDataSourceHardCode
-import com.example.rosavtodorproject2.data.repositories.MapPointsRepository
-import com.example.rosavtodorproject2.data.repositories.MessagesRepository
-import com.example.rosavtodorproject2.data.repositories.UserRepository
+import com.example.rosavtodorproject2.data.dataSource.MapRemoteDataSource
 import com.example.rosavtodorproject2.domain.useCases.MapPointsUseCase
 import com.example.rosavtodorproject2.domain.useCases.MessageWithUserSenderUseCase
 import com.example.rosavtodorproject2.domain.useCases.MessagesUseCase
@@ -34,7 +31,7 @@ object DataModule {
     fun getChatsDataSource() = ChatsDataSourceHardCode()
     @Provides
     @AppComponentScope
-    fun getMapDataSource() = MapDataSourceHardCode()
+    fun getMapDataSource() = MapRemoteDataSource()
 }
 
 @dagger.Module

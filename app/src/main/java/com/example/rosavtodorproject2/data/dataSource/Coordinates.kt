@@ -1,10 +1,8 @@
-package com.example.rosavtodorproject2.data.models
+package com.example.rosavtodorproject2.data.dataSource
 
 import com.google.gson.annotations.SerializedName
 
-data class MyPoint(
+data class Coordinates(
     @SerializedName("latitude") val latitude: Double,
     @SerializedName("longitude") val longitude: Double,
-    @SerializedName("name") val name: String,
-    @SerializedName("type") val type: Int,
 )

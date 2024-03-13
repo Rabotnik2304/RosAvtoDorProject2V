@@ -68,7 +68,6 @@ class InteractiveMapFragment : Fragment() {
 
     // Вот это надо хранить где-то на уровне приложения, а то иначе при выходе с фрагмента
     // он не сохраняет его
-    private var previousLocation: Location? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,15 +80,28 @@ class InteractiveMapFragment : Fragment() {
         locationManager =
             requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager?
 
-        mapView.map.move(
-            CameraPosition(
-                Point(BASE_LATITUDE, BASE_LONGITUDE),
-                /* zoom = */ 8f,
-                /* azimuth = */ 0f,
-                /* tilt = */ 0f
+        if (App.getInstance().previousLocation == null) {
+            mapView.map.move(
+                CameraPosition(
+                    Point(BASE_LATITUDE, BASE_LONGITUDE),
+                    /* zoom = */ 8f,
+                    /* azimuth = */ 0f,
+                    /* tilt = */ 0f
+                )
             )
-        )
-
+        } else {
+            mapView.map.move(
+                CameraPosition(
+                    Point(
+                        App.getInstance().previousLocation!!.latitude,
+                        App.getInstance().previousLocation!!.longitude
+                    ),
+                    /* zoom = */ 8f,
+                    /* azimuth = */ 0f,
+                    /* tilt = */ 0f
+                )
+            )
+        }
         mapView.map.addInputListener(addingPointListener)
 
         viewModel.points.observe(viewLifecycleOwner)
@@ -99,6 +111,7 @@ class InteractiveMapFragment : Fragment() {
 
         return binding.root
     }
+
     private val addingPointListener = object : InputListener {
         override fun onMapTap(map: Map, point: Point) {
 
@@ -162,6 +175,7 @@ class InteractiveMapFragment : Fragment() {
             listenerForCancelAdditionPointFab(it)
         }
     }
+
     private fun checkLocationPermission() {
         // Проверяем разрешение на использование местоположения
         if (ActivityCompat.checkSelfPermission(
@@ -181,6 +195,7 @@ class InteractiveMapFragment : Fragment() {
             )
         }
     }
+
     @SuppressLint("MissingPermission")
     val requestLocationPermissionLauncher =
         registerForActivityResult(
@@ -205,8 +220,8 @@ class InteractiveMapFragment : Fragment() {
         }
     private val locationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
-            if (previousLocation == null) {
-                previousLocation = location
+            if (App.getInstance().previousLocation == null) {
+                App.getInstance().previousLocation = location
                 mapView.map.move(
                     CameraPosition(
                         Point(location.latitude, location.longitude),
@@ -218,7 +233,7 @@ class InteractiveMapFragment : Fragment() {
                 viewModel.updatePoints(location.latitude, location.longitude)
                 return
             }
-            val distance = previousLocation!!.distanceTo(location)
+            val distance = App.getInstance().previousLocation!!.distanceTo(location)
 
             if (distance >= 2000) {
                 mapView.map.move(
@@ -230,10 +245,11 @@ class InteractiveMapFragment : Fragment() {
                     )
                 )
                 viewModel.updatePoints(location.latitude, location.longitude)
-                previousLocation = location
+                App.getInstance().previousLocation = location
             }
         }
     }
+
     private fun listenerForAddPointToMapFab(anchorView: View) {
         val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.MyPopupMenuStyle)
         val popupMenu = PopupMenu(wrapper, anchorView, Gravity.END)

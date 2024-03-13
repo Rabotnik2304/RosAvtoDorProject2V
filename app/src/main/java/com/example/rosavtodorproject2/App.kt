@@ -2,6 +2,7 @@ package com.example.rosavtodorproject2
 
 import android.R
 import android.app.Application
+import android.location.Location
 import com.example.rosavtodorproject2.ioc.ApplicationComponent
 import com.example.rosavtodorproject2.ioc.DaggerApplicationComponent
 import com.yandex.mapkit.MapKitFactory
@@ -13,7 +14,7 @@ class App : Application() {
     val applicationComponent: ApplicationComponent by lazy {
         DaggerApplicationComponent.builder().build()
     }
-
+    var previousLocation: Location? = null
     override fun onCreate() {
         super.onCreate()
         sInstance = this

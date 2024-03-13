@@ -1,6 +1,7 @@
 package com.example.rosavtodorproject2.ui.view.interactiveMapFragment
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -15,6 +16,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -58,21 +61,13 @@ class InteractiveMapFragment : Fragment() {
     )
     private var currentIconPlacemark: com.yandex.mapkit.map.PlacemarkMapObject? = null
 
-    //По сути эти двое - константы
     private val BASE_LATITUDE: Double = 55.154
     private val BASE_LONGITUDE: Double = 61.4291
 
-    private var previousLocation: Location? = null
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentInteractiveMapBinding.inflate(layoutInflater, container, false)
+    private var locationManager: LocationManager? = null
 
-        MapKitFactory.initialize(getApplicationContext())
-        mapView = binding.mapview
-
-        val locationListener = LocationListener { location ->
+    private val locationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
             if (previousLocation == null) {
                 previousLocation = location
                 mapView.map.move(
@@ -83,26 +78,35 @@ class InteractiveMapFragment : Fragment() {
                         /* tilt = */ 0f
                     )
                 )
-                //Это что?
-                return@LocationListener
+                return
             }
             val distance = previousLocation!!.distanceTo(location)
-            // Вот здесь у нас камера и точки на карте обновляются при изменения координат на 0.5
-            // от предыдущих, что мне кажется чутка сомнительным из-за приколов типа 0.1*0.1=0.01
+
             if (distance >= 2000) {
-                previousLocation = location
                 mapView.map.move(
                     CameraPosition(
-                        Point( previousLocation!!.latitude,  previousLocation!!.longitude),
+                        Point(location.latitude, location.longitude),
                         /* zoom = */ 8f,
                         /* azimuth = */ 0f,
                         /* tilt = */ 0f
                     )
                 )
+                previousLocation = location
             }
         }
+    }
+    private var previousLocation: Location? = null
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentInteractiveMapBinding.inflate(layoutInflater, container, false)
 
-        setUpLocationManager(locationListener)
+        MapKitFactory.initialize(getApplicationContext())
+        mapView = binding.mapview
+
+        locationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager?
 
         mapView.map.move(
             CameraPosition(
@@ -115,64 +119,13 @@ class InteractiveMapFragment : Fragment() {
 
         mapView.map.addInputListener(addingPointListener)
 
-        viewModel.points.observe(viewLifecycleOwner) {
+        viewModel.points.observe(viewLifecycleOwner)
+        {
             addVerifiedPointsToInteractiveMap(it)
         }
 
         return binding.root
     }
-
-    private fun setUpLocationManager(locationListener: LocationListener) {
-
-        val locationManager: LocationManager? =
-            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-
-        // Проверяем разрешение на использование местоположения
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-            &&
-            ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // Если разрешение не предоставлено, запрашиваем его
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION),
-                1
-            )
-
-            if (ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-                &&
-                ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                locationManager?.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    0,
-                    0f,
-                    locationListener
-                )
-            }
-        } else {
-            // Если разрешение предоставлено, запрашиваем обновления местоположения
-            locationManager?.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                0,
-                0f,
-                locationListener
-            )
-        }
-    }
-
     private val addingPointListener = object : InputListener {
         override fun onMapTap(map: Map, point: Point) {
 
@@ -220,6 +173,9 @@ class InteractiveMapFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        checkLocationPermission()
+
         binding.backToChatsPanelButton.setOnClickListener {
             findNavController().navigate(R.id.action_interactiveMapFragment_to_chatsFragment)
         }
@@ -233,7 +189,47 @@ class InteractiveMapFragment : Fragment() {
             listenerForCancelAdditionPointFab(it)
         }
     }
-
+    private fun checkLocationPermission() {
+        // Проверяем разрешение на использование местоположения
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Если разрешение не предоставлено, запрашиваем его
+            requestLocationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        } else {
+            // Если разрешение предоставлено, запрашиваем обновления местоположения
+            locationManager?.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                0,
+                0f,
+                locationListener
+            )
+        }
+    }
+    @SuppressLint("MissingPermission")
+    val requestLocationPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                // Разрешение на использование местоположения предоставлено
+                locationManager?.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    0,
+                    0f,
+                    locationListener
+                )
+            } else {
+                // Разрешение на использование местоположения не предоставлено
+                Toast.makeText(
+                    requireContext(),
+                    "Без доступа к местоположению мы не сможем отправить вам точки",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
     private fun listenerForAddPointToMapFab(anchorView: View) {
         val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.MyPopupMenuStyle)
         val popupMenu = PopupMenu(wrapper, anchorView, Gravity.END)

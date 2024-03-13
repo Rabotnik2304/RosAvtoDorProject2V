@@ -1,6 +1,11 @@
 package com.example.rosavtodorproject2.ui.view.interactiveMapFragment
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextThemeWrapper
@@ -9,14 +14,13 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.PopupMenu
-import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.rosavtodorproject2.App
+
 import com.example.rosavtodorproject2.R
 import com.example.rosavtodorproject2.data.models.MyPoint
 import com.example.rosavtodorproject2.databinding.FragmentInteractiveMapBinding
@@ -54,6 +58,11 @@ class InteractiveMapFragment : Fragment() {
     )
     private var currentIconPlacemark: com.yandex.mapkit.map.PlacemarkMapObject? = null
 
+    //По сути эти двое - константы
+    private val BASE_LATITUDE: Double = 55.154
+    private val BASE_LONGITUDE: Double = 61.4291
+
+    private var previousLocation: Location? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,10 +72,42 @@ class InteractiveMapFragment : Fragment() {
         MapKitFactory.initialize(getApplicationContext())
         mapView = binding.mapview
 
+        val locationListener = LocationListener { location ->
+            if (previousLocation == null) {
+                previousLocation = location
+                mapView.map.move(
+                    CameraPosition(
+                        Point(location.latitude, location.longitude),
+                        /* zoom = */ 8f,
+                        /* azimuth = */ 0f,
+                        /* tilt = */ 0f
+                    )
+                )
+                //Это что?
+                return@LocationListener
+            }
+            val distance = previousLocation!!.distanceTo(location)
+            // Вот здесь у нас камера и точки на карте обновляются при изменения координат на 0.5
+            // от предыдущих, что мне кажется чутка сомнительным из-за приколов типа 0.1*0.1=0.01
+            if (distance >= 2000) {
+                previousLocation = location
+                mapView.map.move(
+                    CameraPosition(
+                        Point( previousLocation!!.latitude,  previousLocation!!.longitude),
+                        /* zoom = */ 8f,
+                        /* azimuth = */ 0f,
+                        /* tilt = */ 0f
+                    )
+                )
+            }
+        }
+
+        setUpLocationManager(locationListener)
+
         mapView.map.move(
             CameraPosition(
-                Point(55.154, 61.4291),
-                /* zoom = */ 6f,
+                Point(BASE_LATITUDE, BASE_LONGITUDE),
+                /* zoom = */ 8f,
                 /* azimuth = */ 0f,
                 /* tilt = */ 0f
             )
@@ -74,38 +115,17 @@ class InteractiveMapFragment : Fragment() {
 
         mapView.map.addInputListener(addingPointListener)
 
-
         viewModel.points.observe(viewLifecycleOwner) {
             addVerifiedPointsToInteractiveMap(it)
         }
 
-        /*
-           Всё что находится ниже, до конца метода, это просто эксперимент по получению местоположения
-           После получения разрешения, он не сразу, а только после повторного захода во фрагмент
-           начинает получать текущее местоположение
-           Причём получает он его прямо таки постоянно, без остановок.
-           (Возможно стоит делать запросы в Бек, только если расстояние от прошлого отличается на 2 км.)
-           Мне кажется стоит ПОКА оставить это дело, до обновления бека, т.к. пока, без знаний того,
-           как будет организован бек, я не могу сказать, как мне надо здесь всё поменять, чтобы
-           работало нормально + выглядело не так топорно что-ли.
+        return binding.root
+    }
 
+    private fun setUpLocationManager(locationListener: LocationListener) {
 
-
-        val locationManager:LocationManager? = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-
-        val locationListener = object : LocationListener {
-            override fun onLocationChanged(location: Location) {
-                // Местоположение пользователя изменилось
-                val latitude: Double = location.getLatitude()
-                val longitude: Double = location.getLongitude()
-                // Делаем что-то с полученными координатами
-                Toast.makeText(
-                    requireContext(),
-                    "Широта: $latitude, Долгота: $longitude",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
+        val locationManager: LocationManager? =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager?
 
         // Проверяем разрешение на использование местоположения
         if (ActivityCompat.checkSelfPermission(
@@ -151,9 +171,6 @@ class InteractiveMapFragment : Fragment() {
                 locationListener
             )
         }
-        */
-
-        return binding.root
     }
 
     private val addingPointListener = object : InputListener {

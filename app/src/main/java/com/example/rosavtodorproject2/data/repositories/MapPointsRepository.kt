@@ -16,9 +16,11 @@ class MapPointsRepository @Inject constructor(
 ) {
     private val _points = MutableLiveData<List<MyPoint>>(emptyList())
     val points: LiveData<List<MyPoint>> = _points
+
     @MainThread
-    suspend fun updatePoints() {
-        val loadedList = withContext(Dispatchers.IO) { dataSource.getPoints() }
+    suspend fun updatePoints(currentLatitude: Double, currentLongitude: Double) {
+        val loadedList =
+            withContext(Dispatchers.IO) { dataSource.getPoints(currentLatitude, currentLongitude) }
         _points.value = loadedList
     }
 

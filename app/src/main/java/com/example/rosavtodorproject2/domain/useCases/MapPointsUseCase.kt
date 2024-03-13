@@ -14,11 +14,12 @@ class MapPointsUseCase @Inject constructor(
     private val mapPointsRepository: MapPointsRepository,
 ) {
     val points: LiveData<List<MyPoint>> = mapPointsRepository.points
-    suspend fun updatePoints() {
-        withContext(Dispatchers.Main){
-            mapPointsRepository.updatePoints()
+    suspend fun updatePoints(currentLatitude: Double, currentLongitude: Double) {
+        withContext(Dispatchers.Main) {
+            mapPointsRepository.updatePoints(currentLatitude, currentLongitude)
         }
     }
+
     fun addPoint(point: MyPoint) {
         mapPointsRepository.addPoint(point)
     }

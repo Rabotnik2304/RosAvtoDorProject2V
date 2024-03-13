@@ -22,14 +22,14 @@ class MapRemoteDataSource {
     private val points: MutableList<MyPoint> = mutableListOf()
 
     fun loadPoints() = points
-    suspend fun getPoints(): List<MyPoint> {
+    suspend fun getPoints(currentLatitude: Double, currentLongitude: Double): List<MyPoint> {
         val response = mapPointsApi.getPoints(
             Coordinates(
-                54.88324475618048,
-                57.26202530166927
+                currentLatitude,
+                currentLongitude
             )
         )
-        if(response.isSuccessful){
+        if (response.isSuccessful) {
             response.body()?.forEach { points.add(it) }
         }
         return points

@@ -65,6 +65,9 @@ class InteractiveMapFragment : Fragment() {
     private val BASE_LONGITUDE: Double = 61.4291
 
     private var locationManager: LocationManager? = null
+
+    // Вот это надо хранить где-то на уровне приложения, а то иначе при выходе с фрагмента
+    // он не сохраняет его
     private var previousLocation: Location? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -212,6 +215,7 @@ class InteractiveMapFragment : Fragment() {
                         /* tilt = */ 0f
                     )
                 )
+                viewModel.updatePoints(location.latitude, location.longitude)
                 return
             }
             val distance = previousLocation!!.distanceTo(location)
@@ -225,6 +229,7 @@ class InteractiveMapFragment : Fragment() {
                         /* tilt = */ 0f
                     )
                 )
+                viewModel.updatePoints(location.latitude, location.longitude)
                 previousLocation = location
             }
         }

@@ -65,36 +65,6 @@ class InteractiveMapFragment : Fragment() {
     private val BASE_LONGITUDE: Double = 61.4291
 
     private var locationManager: LocationManager? = null
-
-    private val locationListener = object : LocationListener {
-        override fun onLocationChanged(location: Location) {
-            if (previousLocation == null) {
-                previousLocation = location
-                mapView.map.move(
-                    CameraPosition(
-                        Point(location.latitude, location.longitude),
-                        /* zoom = */ 8f,
-                        /* azimuth = */ 0f,
-                        /* tilt = */ 0f
-                    )
-                )
-                return
-            }
-            val distance = previousLocation!!.distanceTo(location)
-
-            if (distance >= 2000) {
-                mapView.map.move(
-                    CameraPosition(
-                        Point(location.latitude, location.longitude),
-                        /* zoom = */ 8f,
-                        /* azimuth = */ 0f,
-                        /* tilt = */ 0f
-                    )
-                )
-                previousLocation = location
-            }
-        }
-    }
     private var previousLocation: Location? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -230,6 +200,35 @@ class InteractiveMapFragment : Fragment() {
                 ).show()
             }
         }
+    private val locationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+            if (previousLocation == null) {
+                previousLocation = location
+                mapView.map.move(
+                    CameraPosition(
+                        Point(location.latitude, location.longitude),
+                        /* zoom = */ 8f,
+                        /* azimuth = */ 0f,
+                        /* tilt = */ 0f
+                    )
+                )
+                return
+            }
+            val distance = previousLocation!!.distanceTo(location)
+
+            if (distance >= 2000) {
+                mapView.map.move(
+                    CameraPosition(
+                        Point(location.latitude, location.longitude),
+                        /* zoom = */ 8f,
+                        /* azimuth = */ 0f,
+                        /* tilt = */ 0f
+                    )
+                )
+                previousLocation = location
+            }
+        }
+    }
     private fun listenerForAddPointToMapFab(anchorView: View) {
         val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.MyPopupMenuStyle)
         val popupMenu = PopupMenu(wrapper, anchorView, Gravity.END)

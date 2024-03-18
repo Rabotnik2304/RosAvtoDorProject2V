@@ -30,7 +30,6 @@ class MapRemoteDataSource {
         )
         if (response.isSuccessful) {
             response.body()?.points?.forEach { points.add(it) }
-            val x = response.body()
         }
         return points
     }

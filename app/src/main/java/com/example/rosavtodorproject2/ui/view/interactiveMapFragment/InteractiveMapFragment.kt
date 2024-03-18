@@ -278,7 +278,7 @@ class InteractiveMapFragment : Fragment() {
         binding.cancelAdditionPointToMapFab.visibility = View.VISIBLE
         binding.confirmAdditionPointToMapFab.visibility = View.VISIBLE
 
-        currentIconNumber = menuItem.order
+        currentIconNumber = menuItem.order + 5
         isPointAdding = true
         return true
     }

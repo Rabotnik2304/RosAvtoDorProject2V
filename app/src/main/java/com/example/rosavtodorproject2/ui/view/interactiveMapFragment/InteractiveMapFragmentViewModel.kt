@@ -3,6 +3,7 @@ package com.example.rosavtodorproject2.ui.view.interactiveMapFragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.rosavtodorproject2.data.models.Coordinates
 import com.example.rosavtodorproject2.data.models.MyPoint
 import com.example.rosavtodorproject2.domain.useCases.MapPointsUseCase
 import kotlinx.coroutines.launch
@@ -24,8 +25,7 @@ class InteractiveMapFragmentViewModel @Inject constructor(
         mapPointsUseCase.addPoint(
             MyPoint(
                 type = type,
-                latitude = latitude,
-                longitude = longitude,
+                coordinates = Coordinates(latitude,longitude),
                 name = text,
             )
         )

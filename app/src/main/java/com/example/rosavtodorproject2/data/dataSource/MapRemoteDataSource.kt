@@ -10,7 +10,7 @@ import retrofit2.create
 
 class MapRemoteDataSource {
 
-    private val BASE_URL = "http://example.com/api/Mobile/"
+    private val BASE_URL = "https://sug4chy.un1ver5e.keenetic.link/api/Mobile/"
     private val mapPointsApi: MapPointsApi by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -23,14 +23,14 @@ class MapRemoteDataSource {
 
     fun loadPoints() = points
     suspend fun getPoints(currentLatitude: Double, currentLongitude: Double): List<MyPoint> {
+
         val response = mapPointsApi.getPoints(
-            Coordinates(
-                currentLatitude,
-                currentLongitude
-            )
+            currentLatitude,
+            currentLongitude
         )
         if (response.isSuccessful) {
-            response.body()?.forEach { points.add(it) }
+            response.body()?.points?.forEach { points.add(it) }
+            val x = response.body()
         }
         return points
     }

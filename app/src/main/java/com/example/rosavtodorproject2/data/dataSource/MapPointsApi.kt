@@ -8,6 +8,7 @@ import retrofit2.http.Query
 interface MapPointsApi {
     @GET("verifiedPoints")
     suspend fun getPoints(
-        @Query("params") params: Coordinates
-    ): Response<List<MyPoint>>
+        @Query("Coordinates.Latitude") latitude:Double,
+        @Query("Coordinates.Longitude") longitude:Double,
+    ): Response<GetResponse>
 }

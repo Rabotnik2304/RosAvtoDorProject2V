@@ -49,15 +49,15 @@ class InteractiveMapFragment : Fragment() {
     private var isPointAdding = false
     private var currentIconNumber: Int = -1
     private val iconsResources = listOf(
+        R.drawable.petrol_station_icon,
+        R.drawable.cafe_icon_24dp,
+        R.drawable.petrol_station_icon,
+        R.drawable.petrol_station_icon,
+        R.drawable.petrol_station_icon,
         R.drawable.image_car_accident_24dp,
         R.drawable.image_car_accident_24dp,
         R.drawable.image_car_accident_24dp,
         R.drawable.image_car_accident_24dp,
-        R.drawable.petrol_station_icon,
-        R.drawable.petrol_station_icon,
-        R.drawable.petrol_station_icon,
-        R.drawable.petrol_station_icon,
-        R.drawable.petrol_station_icon,
     )
     private var currentIconPlacemark: com.yandex.mapkit.map.PlacemarkMapObject? = null
 
@@ -151,7 +151,7 @@ class InteractiveMapFragment : Fragment() {
                 ImageProvider.fromResource(requireContext(), iconsResources[it.type])
             mapView.map.mapObjects.addPlacemark()
                 .apply {
-                    geometry = Point(it.latitude, it.longitude)
+                    geometry = Point(it.coordinates.latitude, it.coordinates.longitude)
                     setIcon(imageProvider)
                 }
         }
